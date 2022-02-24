@@ -1,0 +1,101 @@
+import java.util.Arrays;
+
+
+public class DoubleMatrix {
+  private final double[][] matrix;
+  public final int rows;
+  public final int columns;
+  public final int size;
+
+  private DoubleMatrix(double[][] matrix, boolean doValidate, boolean doCopy) {
+    if(doValidate) {
+      for(int i = 1; i < matrix.length; i++) {
+        if(matrix[i].length != matrix[0].length) {
+          System.err.println("[エラー] 行列として解釈できません");
+          System.err.println(Arrays.deepToString(matrix));
+          System.exit(1);
+        }
+      }
+    }
+
+    this.rows = matrix.length;
+    this.columns = matrix[0].length;
+    this.size = matrix.length * matrix[0].length;
+
+    if(doCopy) {
+      this.matrix = new double[this.rows][this.columns];
+      for(int i = 0; i < this.rows; i++) {
+        System.arraycopy(matrix[i], 0, this.matrix[i], 0, this.columns);
+      }
+    } else {
+      this.matrix = matrix;
+    }
+  }
+
+  public DoubleMatrix(double[][] matrix) {
+    this(matrix, true, true);
+  }
+
+  public boolean isEqual(DoubleMatrix val) {
+    if(val == null) {
+      return false;
+    }
+
+    if(this == val) {
+      return true;
+    }
+
+    if(this.rows != val.rows || this.columns != val.columns) {
+      return false;
+    }
+
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        if(matrix[i][j] != val.get(i, j)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder result = new StringBuilder();
+
+    for(int i = 0; i < this.rows; i++) {
+      result.append("|");
+      for(int j = 0; j < this.columns; j++) {
+        result.append(" ");
+        result.append(this.matrix[i][j]);
+      }
+      result.append(" |\n");
+    }
+
+    return result.toString();
+  }
+
+  public double get(int i, int j) {
+    return this.matrix[i][j];
+  }
+
+  public void set(int i, int j, double entry) {
+    this.matrix[i][j] = entry;
+  }
+
+  public DoubleMatrix add(DoubleMatrix val) {
+    if(this.rows != val.rows || this.columns != val.columns) {
+      return null;
+    }
+
+    double[][] result = new double[this.rows][this.columns];
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        result[i][j] = this.get(i, j) + val.get(i, j);
+      }
+    }
+
+    return (new DoubleMatrix(result, false, false));
+  }
+}
