@@ -249,6 +249,35 @@ public class TestDoubleMatrix {
     } // end of block
 
 
+    { // sub() の動作確認
+      DoubleMatrix a = new DoubleMatrix(
+        new double[][] {
+          {1, 4, 7, 10},
+          {2, 5, 8, 11},
+          {3, 6, 9, 12},
+        }
+      );
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][] {
+          { 1,  1,  1,  1},
+          {-1, -1, -1, -1},
+          { 2,  2,  2,  2},
+        }
+      );
+
+      DoubleMatrix c = new DoubleMatrix(
+        new double[][] {
+          {0, 3, 6,  9},
+          {3, 6, 9, 12},
+          {1, 4, 7, 10},
+        }
+      );
+
+      assert a.sub(b).isEqual(c);
+
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

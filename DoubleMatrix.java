@@ -98,4 +98,19 @@ public class DoubleMatrix {
 
     return (new DoubleMatrix(result, false, false));
   }
+
+  public DoubleMatrix sub(DoubleMatrix val) {
+    if(this.rows != val.rows || this.columns != val.columns) {
+      return null;
+    }
+
+    double[][] result = new double[this.rows][this.columns];
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        result[i][j] = this.get(i, j) - val.get(i, j);
+      }
+    }
+
+    return (new DoubleMatrix(result, false, false));
+  }
 }
