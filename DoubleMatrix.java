@@ -113,4 +113,15 @@ public class DoubleMatrix {
 
     return (new DoubleMatrix(result, false, false));
   }
+
+  public DoubleMatrix mul(double k) {
+    double[][] result = new double[this.rows][this.columns];
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        result[i][j] = k * this.get(i, j);
+      }
+    }
+
+    return (new DoubleMatrix(result, false, false));
+  }
 }

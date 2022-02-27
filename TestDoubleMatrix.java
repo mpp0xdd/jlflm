@@ -278,6 +278,45 @@ public class TestDoubleMatrix {
 
     } // end of block
 
+
+    { // 行列の定数倍の動作確認
+      DoubleMatrix a = new DoubleMatrix(
+        new double[][] {
+          {-9, -3, 6},
+          { 4,  5, 6},
+          { 1,  2, 3},
+        }
+      );
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][] {
+          {-18, -6, 12},
+          {  8, 10, 12},
+          {  2,  4,  6},
+        }
+      );
+
+      DoubleMatrix z = new DoubleMatrix(
+        new double[][] {
+          {0, 0, 0},
+          {0, 0, 0},
+          {0, 0, 0},
+        }
+      );
+
+      assert a.mul(2).isEqual(b);
+      assert b.mul(0.5).isEqual(a);
+
+      // 0A = O
+      assert a.mul(0).isEqual(z);
+
+      // 1A = A
+      assert a.mul(1).isEqual(a);
+
+      // kO = O
+      assert z.mul(12).isEqual(z);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()
