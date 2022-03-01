@@ -372,6 +372,66 @@ public class TestDoubleMatrix {
       assert c.mul(d).isEqual(g);
     } // end of block
 
+
+    { // createDiagonalMatrix() の動作確認
+      DoubleMatrix a = DoubleMatrix.createDiagonalMatrix(new double[]{1, 2, 3});
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][] {
+          {1, 0, 0},
+          {0, 2, 0},
+          {0, 0, 3},
+        }
+      );
+
+      DoubleMatrix c = new DoubleMatrix(
+        new double[][] {
+          {0, 1, 2},
+          {3, 4, 5},
+          {6, 7, 8},
+        }
+      );
+
+      DoubleMatrix d = DoubleMatrix.createDiagonalMatrix(new double[]{2, 3, 4});
+
+      DoubleMatrix e = new DoubleMatrix(
+        new double[][] {
+          { 0,  3,  8},
+          { 6, 12, 20},
+          {12, 21, 32},
+        }
+      );
+
+      DoubleMatrix f = DoubleMatrix.createDiagonalMatrix(new double[] {2, 1});
+
+      DoubleMatrix g = new DoubleMatrix(
+        new double[][] {
+          {1, 2, 3},
+          {4, 5, 6},
+        }
+      );
+
+      DoubleMatrix h = new DoubleMatrix(
+        new double[][] {
+          {2, 4, 6},
+          {4, 5, 6},
+        }
+      );
+
+      DoubleMatrix z = new DoubleMatrix(
+        new double[][] {
+          {0, 0, 0},
+          {0, 0, 0},
+          {0, 0, 0},
+        }
+      );
+
+      assert a.isEqual(b);
+      assert c.mul(d).isEqual(e);
+      assert f.mul(g).isEqual(h);
+      assert z.isEqual(DoubleMatrix.createDiagonalMatrix(new double[]{0, 0, 0}));
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

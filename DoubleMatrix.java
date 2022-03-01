@@ -2,6 +2,15 @@ import java.util.Arrays;
 
 
 public class DoubleMatrix {
+
+  public static DoubleMatrix createDiagonalMatrix(double[] entries) {
+    double[][] result = new double[entries.length][entries.length];
+    for(int i = 0; i < entries.length; i++) {
+      result[i][i] = entries[i];
+    }
+    return (new DoubleMatrix(result, false, false));
+  }
+
   private final double[][] matrix;
   public final int rows;
   public final int columns;
