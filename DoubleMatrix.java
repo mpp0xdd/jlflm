@@ -124,4 +124,21 @@ public class DoubleMatrix {
 
     return (new DoubleMatrix(result, false, false));
   }
+
+  public DoubleMatrix mul(DoubleMatrix val) {
+    if(this.columns != val.rows) {
+      return null;
+    }
+
+    double[][] result = new double[this.rows][val.columns];
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < val.columns; j++) {
+        for(int k = 0; k < this.columns; k++) { // or (k < val.rows)
+          result[i][j] += this.get(i, k) * val.get(k, j);
+        }
+      }
+    }
+
+    return (new DoubleMatrix(result, false, false));
+  }
 }

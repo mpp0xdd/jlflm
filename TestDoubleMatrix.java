@@ -317,6 +317,61 @@ public class TestDoubleMatrix {
       assert z.mul(12).isEqual(z);
     } // end of block
 
+
+    { // 行列同士の掛け算の動作確認
+      DoubleMatrix a = new DoubleMatrix(new double[][] {{1, 2, 3, 4, 5}});
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][] {
+          {1},
+          {1},
+          {1},
+          {1},
+          {1},
+        }
+      );
+
+      DoubleMatrix c = new DoubleMatrix(
+        new double[][] {
+          {1},
+          {2},
+          {3},
+          {4},
+          {5},
+        }
+      );
+
+      DoubleMatrix d = new DoubleMatrix(new double[][] {{1, 1, 1, 1, 1}});
+
+      DoubleMatrix e = new DoubleMatrix(new double[][] {{15}});
+
+      DoubleMatrix f = new DoubleMatrix(
+        new double[][] {
+          {1, 2, 3, 4, 5},
+          {1, 2, 3, 4, 5},
+          {1, 2, 3, 4, 5},
+          {1, 2, 3, 4, 5},
+          {1, 2, 3, 4, 5},
+        }
+      );
+
+      DoubleMatrix g = new DoubleMatrix(
+        new double[][] {
+          {1, 1, 1, 1, 1},
+          {2, 2, 2, 2, 2},
+          {3, 3, 3, 3, 3},
+          {4, 4, 4, 4, 4},
+          {5, 5, 5, 5, 5},
+        }
+      );
+
+      assert a.mul(b).isEqual(e);
+      assert d.mul(c).isEqual(e);
+
+      assert b.mul(a).isEqual(f);
+      assert c.mul(d).isEqual(g);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()
