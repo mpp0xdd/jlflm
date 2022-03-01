@@ -432,6 +432,23 @@ public class TestDoubleMatrix {
       assert z.isEqual(DoubleMatrix.createDiagonalMatrix(new double[]{0, 0, 0}));
     } // end of block
 
+
+    { // createIdentityMatrix() の動作確認
+      DoubleMatrix a = DoubleMatrix.createIdentityMatrix(5);
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][] {
+          {1, 0, 0, 0, 0},
+          {0, 1, 0, 0, 0},
+          {0, 0, 1, 0, 0},
+          {0, 0, 0, 1, 0},
+          {0, 0, 0, 0, 1},
+        }
+      );
+
+      assert a.isEqual(b);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

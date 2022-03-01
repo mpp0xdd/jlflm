@@ -11,6 +11,14 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  public static DoubleMatrix createIdentityMatrix(int n) {
+    double[][] result = new double[n][n];
+    for(int i = 0; i < n; i++) {
+      result[i][i] = 1;
+    }
+    return (new DoubleMatrix(result, false, false));
+  }
+
   private final double[][] matrix;
   public final int rows;
   public final int columns;
