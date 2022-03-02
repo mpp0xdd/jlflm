@@ -374,7 +374,7 @@ public class TestDoubleMatrix {
 
 
     { // createDiagonalMatrix() の動作確認
-      DoubleMatrix a = DoubleMatrix.createDiagonalMatrix(new double[]{1, 2, 3});
+      DoubleMatrix a = DoubleMatrix.createDiagonalMatrix(1, 2, 3);
 
       DoubleMatrix b = new DoubleMatrix(
         new double[][] {
@@ -392,7 +392,7 @@ public class TestDoubleMatrix {
         }
       );
 
-      DoubleMatrix d = DoubleMatrix.createDiagonalMatrix(new double[]{2, 3, 4});
+      DoubleMatrix d = DoubleMatrix.createDiagonalMatrix(2, 3, 4);
 
       DoubleMatrix e = new DoubleMatrix(
         new double[][] {
@@ -402,7 +402,7 @@ public class TestDoubleMatrix {
         }
       );
 
-      DoubleMatrix f = DoubleMatrix.createDiagonalMatrix(new double[] {2, 1});
+      DoubleMatrix f = DoubleMatrix.createDiagonalMatrix(2, 1);
 
       DoubleMatrix g = new DoubleMatrix(
         new double[][] {
@@ -430,6 +430,7 @@ public class TestDoubleMatrix {
       assert c.mul(d).isEqual(e);
       assert f.mul(g).isEqual(h);
       assert z.isEqual(DoubleMatrix.createDiagonalMatrix(new double[]{0, 0, 0}));
+      assert z.isEqual(DoubleMatrix.createDiagonalMatrix(0, 0, 0));
     } // end of block
 
 
@@ -476,7 +477,7 @@ public class TestDoubleMatrix {
         }
       );
 
-      DoubleMatrix e = DoubleMatrix.createDiagonalMatrix(new double[]{1, 2, 3});
+      DoubleMatrix e = DoubleMatrix.createDiagonalMatrix(1, 2, 3);
 
       assert a.trs().isEqual(b);
       assert a.trs().trs().isEqual(a);
