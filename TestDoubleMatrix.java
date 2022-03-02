@@ -486,6 +486,22 @@ public class TestDoubleMatrix {
       assert e.trs().isEqual(e);
     } // end of block
 
+
+    { // isSymmetricMatrix() の動作確認
+      DoubleMatrix a = new DoubleMatrix(
+        new double[][]{
+          {1, 7,  3},
+          {7, 4, -5},
+          {3, -5, 6},
+        }
+      );
+
+      assert DoubleMatrix.isSymmetricMatrix(a);
+
+      a.set(0, 1, 1);
+      assert !DoubleMatrix.isSymmetricMatrix(a);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

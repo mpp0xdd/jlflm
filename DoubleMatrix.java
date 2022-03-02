@@ -19,6 +19,26 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  public static boolean isSymmetricMatrix(DoubleMatrix val) {
+    if(val.rows != val.columns) {
+      return false;
+    }
+
+    for(int i = 0; i < val.rows; i++) {
+      for(int j = 0; j < val.columns; j++) {
+        if(i == j) {
+          continue;
+        }
+
+        if(val.get(i, j) != val.get(j, i)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   private final double[][] matrix;
   public final int rows;
   public final int columns;
