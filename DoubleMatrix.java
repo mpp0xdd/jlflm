@@ -158,4 +158,15 @@ public class DoubleMatrix {
 
     return (new DoubleMatrix(result, false, false));
   }
+
+  public DoubleMatrix trs() {
+    double[][] result = new double[this.columns][this.rows];
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        result[j][i] = this.matrix[i][j];
+      }
+    }
+
+    return (new DoubleMatrix(result, false, false));
+  }
 }

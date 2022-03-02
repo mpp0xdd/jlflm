@@ -449,6 +449,42 @@ public class TestDoubleMatrix {
       assert a.isEqual(b);
     } // end of block
 
+
+    { // 行列の転置の動作確認
+      DoubleMatrix a = new DoubleMatrix(
+        new double[][] {
+          {1, 2, 3},
+          {4, 5, 6},
+        }
+      );
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][] {
+          {1, 4},
+          {2, 5},
+          {3, 6},
+        }
+      );
+
+      DoubleMatrix c = new DoubleMatrix(new double[][]{{1, 2, 3}});
+
+      DoubleMatrix d = new DoubleMatrix(
+        new double[][]{
+          {1},
+          {2},
+          {3},
+        }
+      );
+
+      DoubleMatrix e = DoubleMatrix.createDiagonalMatrix(new double[]{1, 2, 3});
+
+      assert a.trs().isEqual(b);
+      assert a.trs().trs().isEqual(a);
+
+      assert c.trs().isEqual(d);
+      assert e.trs().isEqual(e);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()
