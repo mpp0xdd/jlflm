@@ -137,7 +137,14 @@ public class TestDoubleMatrix {
         }
       );
 
-      assert !a.isEqual(null);
+      // 実引数がnullなら例外
+      try {
+        a.isEqual(null);
+      }
+      catch(NullPointerException npe) {
+        System.err.println("a.isEqual(null) => " + npe);
+      }
+
       assert a.isEqual(a);
 
       // 行数が異なる場合

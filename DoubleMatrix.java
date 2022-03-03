@@ -78,10 +78,6 @@ public class DoubleMatrix {
   }
 
   public boolean isEqual(DoubleMatrix val) {
-    if(val == null) {
-      return false;
-    }
-
     if(this == val) {
       return true;
     }
