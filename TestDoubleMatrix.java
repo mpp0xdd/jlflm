@@ -502,6 +502,38 @@ public class TestDoubleMatrix {
       assert !DoubleMatrix.isSymmetricMatrix(a);
     } // end of block
 
+
+    { // 行列同士の型の比較の動作確認
+      DoubleMatrix a = new DoubleMatrix(new double[][]{{1, 2, 3}});
+      DoubleMatrix b = new DoubleMatrix(new double[][]{{0, 0, 0}});
+
+      DoubleMatrix c = new DoubleMatrix(
+        new double[][]{
+          {1, 2, 3},
+          {1, 2, 3},
+          {1, 2, 3},
+        }
+      );
+
+      DoubleMatrix d = new DoubleMatrix(
+        new double[][]{
+          {1, 2, 3},
+          {1, 2, 3},
+          {1, 0, 3},
+        }
+      );
+
+      assert !a.isEqual(b);
+      assert !b.isEqual(a);
+      assert a.isTypeEqual(b);
+      assert b.isTypeEqual(a);
+
+      assert !c.isEqual(d);
+      assert !d.isEqual(c);
+      assert c.isTypeEqual(d);
+      assert d.isTypeEqual(c);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

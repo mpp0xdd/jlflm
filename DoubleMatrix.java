@@ -73,6 +73,10 @@ public class DoubleMatrix {
     this(matrix, true, true);
   }
 
+  public boolean isTypeEqual(DoubleMatrix val) {
+    return (this.rows == val.rows && this.columns == val.columns);
+  }
+
   public boolean isEqual(DoubleMatrix val) {
     if(val == null) {
       return false;
@@ -82,7 +86,7 @@ public class DoubleMatrix {
       return true;
     }
 
-    if(this.rows != val.rows || this.columns != val.columns) {
+    if(!this.isTypeEqual(val)) {
       return false;
     }
 
@@ -122,7 +126,7 @@ public class DoubleMatrix {
   }
 
   public DoubleMatrix add(DoubleMatrix val) {
-    if(this.rows != val.rows || this.columns != val.columns) {
+    if(!this.isTypeEqual(val)) {
       return null;
     }
 
@@ -137,7 +141,7 @@ public class DoubleMatrix {
   }
 
   public DoubleMatrix sub(DoubleMatrix val) {
-    if(this.rows != val.rows || this.columns != val.columns) {
+    if(!this.isTypeEqual(val)) {
       return null;
     }
 
