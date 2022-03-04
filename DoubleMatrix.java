@@ -121,6 +121,32 @@ public class DoubleMatrix {
     this.matrix[i][j] = entry;
   }
 
+  public void swapRows(int i1, int i2) {
+    assert i1 >= 0 && i2 >= 0;
+
+    if(i1 == i2) {
+      return;
+    }
+
+    double[] tmp = this.matrix[i1];
+    this.matrix[i1] = this.matrix[i2];
+    this.matrix[i2] = tmp;
+  }
+
+  public void swapColumns(int j1, int j2) {
+    assert j1 >= 0 && j2 >= 0;
+
+    if(j1 == j2) {
+      return;
+    }
+
+    for(int i = 0; i < this.rows; i++) {
+      double tmp = this.matrix[i][j1];
+      this.matrix[i][j1] = this.matrix[i][j2];
+      this.matrix[i][j2] = tmp;
+    }
+  }
+
   public DoubleMatrix add(DoubleMatrix val) {
     if(!this.isTypeEqual(val)) {
       return null;

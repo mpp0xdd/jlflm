@@ -541,6 +541,60 @@ public class TestDoubleMatrix {
       assert d.isTypeEqual(c);
     } // end of block
 
+
+    { // 行と列の交換の動作確認
+      double[][] val = {
+        {1, 1, 1, 1},
+        {2, 2, 2, 2},
+        {3, 3, 3, 3},
+        {4, 4, 4, 4},
+        {5, 5, 5, 5},
+      };
+
+      DoubleMatrix a = new DoubleMatrix(val);
+
+      DoubleMatrix b = new DoubleMatrix(val);
+
+      DoubleMatrix c = new DoubleMatrix(
+        new double[][] {
+          {0, 0, 0, 1, 0},
+          {0, 1, 0, 0, 0},
+          {0, 0, 1, 0, 0},
+          {1, 0, 0, 0, 0},
+          {0, 0, 0, 0, 1},
+        }
+      );
+
+      double[][] val2 = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9},
+        {3, 2, 1},
+      };
+
+      DoubleMatrix d = new DoubleMatrix(val2);
+
+      DoubleMatrix e = new DoubleMatrix(val2);
+
+      DoubleMatrix f = new DoubleMatrix(
+        new double[][]{
+          {0, 0, 1},
+          {0, 1, 0},
+          {1, 0, 0},
+        }
+      );
+
+      assert a.isEqual(b);
+      assert b.isEqual(a);
+      a.swapRows(0, 3);
+      assert a.isEqual(c.mul(b));
+
+      assert d.isEqual(e);
+      assert e.isEqual(d);
+      d.swapColumns(0, 2);
+      assert d.isEqual(e.mul(f));
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()
