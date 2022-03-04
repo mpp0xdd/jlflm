@@ -48,9 +48,17 @@ public class DoubleMatrix {
     if(doValidate) {
       for(int i = 1; i < matrix.length; i++) {
         if(matrix[i].length != matrix[0].length) {
-          System.err.println("[エラー] 行列として解釈できません");
-          System.err.println(Arrays.deepToString(matrix));
-          System.exit(1);
+          StringBuilder errMsgBuf = new StringBuilder("[エラー] 行列として解釈できません\n");
+          final int loc = i;
+          for(i = 0; i < matrix.length; i++) {
+            errMsgBuf.append(Arrays.toString(matrix[i]));
+            if(i == loc) {
+              errMsgBuf.append(" <--\n");
+            } else {
+              errMsgBuf.append("\n");
+            }
+          }
+          throw (new IllegalArgumentException(errMsgBuf.toString()));
         }
       }
     }
@@ -122,10 +130,13 @@ public class DoubleMatrix {
   }
 
   public void swapRows(int i1, int i2) {
-    assert i1 >= 0 && i2 >= 0;
-
+    // 引数が同じなら交換処理を行う必要がないので何もせずreturnする
     if(i1 == i2) {
-      return;
+      // ただし，引数が配列の添え字範囲を逸脱していない場合に限る
+      // 逸脱している場合はそのまま交換処理を実行させ，例外を発生させる
+      if((0 <= i1 && i1 < this.rows) && (0 <= i2 && i2 < this.rows)) {
+        return;
+      }
     }
 
     double[] tmp = this.matrix[i1];
@@ -134,10 +145,13 @@ public class DoubleMatrix {
   }
 
   public void swapColumns(int j1, int j2) {
-    assert j1 >= 0 && j2 >= 0;
-
+    // 引数が同じなら交換処理を行う必要がないので何もせずreturnする
     if(j1 == j2) {
-      return;
+      // ただし，引数が配列の添え字範囲を逸脱していない場合に限る
+      // 逸脱している場合はそのまま交換処理を実行させ，例外を発生させる
+      if((0 <= j1 && j1 < this.columns) && (0 <= j2 && j2 < this.columns)) {
+        return;
+      }
     }
 
     for(int i = 0; i < this.rows; i++) {

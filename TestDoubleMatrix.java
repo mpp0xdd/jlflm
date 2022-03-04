@@ -2,16 +2,20 @@
 public class TestDoubleMatrix {
   public static void main(String[] args) {
 
-    if(false)
     { // 引数の配列が不正な場合を確認
-      DoubleMatrix a = new DoubleMatrix(new double[][]{{0}, {1, 2}});
+      try {
+        DoubleMatrix a = new DoubleMatrix(new double[][]{{0}, {1, 2}});
+      }
+      catch(IllegalArgumentException iae) {
+        System.err.println(iae);
+      }
 
-      // 以下のメッセージが出力された後，プログラムが終了する
-      // - - - - - - - - - - - - - - - - -
-      // [エラー] 行列として解釈できません
-      // [[0.0], [1.0, 2.0]]
-      // - - - - - - - - - - - - - - - - -
-
+      try {
+        DoubleMatrix a = new DoubleMatrix(new double[][]{{0, 1}, {1, 2}, {1, 2, 3}, {4, 5}});
+      }
+      catch(IllegalArgumentException iae) {
+        System.err.println(iae);
+      }
     } // end of block
 
 
@@ -583,6 +587,28 @@ public class TestDoubleMatrix {
           {1, 0, 0},
         }
       );
+
+      try {
+        a.swapRows(-1, -1);
+      } catch(ArrayIndexOutOfBoundsException aioobe) {
+        System.out.println("a.swapRows(-1, -1) => " + aioobe);
+      }
+      try {
+        a.swapRows(100, 100);
+      } catch(ArrayIndexOutOfBoundsException aioobe) {
+        System.out.println("a.swapRows(100, 100) => " + aioobe);
+      }
+
+      try {
+        a.swapColumns(-1, -1);
+      } catch(ArrayIndexOutOfBoundsException aioobe) {
+        System.out.println("a.swapColumns(-1, -1) => " + aioobe);
+      }
+      try {
+        a.swapColumns(100, 100);
+      } catch(ArrayIndexOutOfBoundsException aioobe) {
+        System.out.println("a.swapColumns(100, 100) => " + aioobe);
+      }
 
       assert a.isEqual(b);
       assert b.isEqual(a);
