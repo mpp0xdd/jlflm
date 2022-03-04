@@ -110,12 +110,12 @@ public class DoubleMatrix {
     StringBuilder result = new StringBuilder();
 
     for(int i = 0; i < this.rows; i++) {
-      result.append("|");
-      for(int j = 0; j < this.columns; j++) {
+      result.append(this.matrix[i][0]);
+      for(int j = 1; j < this.columns; j++) {
         result.append(" ");
         result.append(this.matrix[i][j]);
       }
-      result.append(" |\n");
+      result.append("\n");
     }
 
     return result.toString();
