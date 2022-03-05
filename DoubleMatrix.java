@@ -96,7 +96,7 @@ public class DoubleMatrix {
 
     for(int i = 0; i < this.rows; i++) {
       for(int j = 0; j < this.columns; j++) {
-        if(matrix[i][j] != val.get(i, j)) {
+        if(this.get(i, j) != val.get(i, j)) {
           return false;
         }
       }
