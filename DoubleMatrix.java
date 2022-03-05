@@ -1,7 +1,60 @@
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 
 
 public class DoubleMatrix {
+
+  public static void writeToFile(DoubleMatrix val, String filename, String delim)throws IOException {
+    try(BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
+      String buf = delim.equals(" ")? val.toString() : val.toString().replace(" ", delim);
+      file.write(buf, 0, buf.length());
+      file.flush();
+    }
+    catch(IOException ioe) {
+      throw ioe;
+    }
+  }
+
+  public static void writeToFile(DoubleMatrix val, String filename)throws IOException {
+    writeToFile(val, filename, " ");
+  }
+
+  public static DoubleMatrix readFromFile(String filename, String delim)throws IOException {
+    ArrayList<double[]> rows = new ArrayList<double[]>();
+    String line = null;
+
+    try(BufferedReader file = Files.newBufferedReader(Paths.get(filename))) {
+      while((line = file.readLine()) != null) {
+        StringTokenizer tokenizer = new StringTokenizer(line, delim);
+        double[] row = new double[tokenizer.countTokens()];
+        for(int j = 0; j < row.length; j++) {
+          row[j] = Double.parseDouble(tokenizer.nextToken());
+        }
+        rows.add(row);
+      }
+    }
+    catch(NumberFormatException nfe) {
+      System.err.printf("[エラー] %s:%d: %s\n", filename, rows.size() + 1, line);
+      nfe.printStackTrace();
+      System.exit(1);
+    }
+    catch(IOException ioe) {
+      throw ioe;
+    }
+
+    double[][] result = rows.toArray(new double[rows.size()][]);
+    return (new DoubleMatrix(result, true, false));
+  }
+
+  public static DoubleMatrix readFromFile(String filename)throws IOException {
+    return readFromFile(filename, " ");
+  }
 
   public static DoubleMatrix createDiagonalMatrix(double... entries) {
     double[][] result = new double[entries.length][entries.length];

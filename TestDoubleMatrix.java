@@ -1,3 +1,6 @@
+import java.io.IOException;
+
+
 // Usage: java -ea TestDoubleMatrix
 public class TestDoubleMatrix {
   public static void main(String[] args) {
@@ -664,7 +667,54 @@ public class TestDoubleMatrix {
       assert !a.isEqual(b);
       a.muleq(12);
       assert a.isEqual(b);
-    }
+    } // end of block
+
+
+    { // ファイル入出力の動作確認
+      DoubleMatrix a = new DoubleMatrix(new double[][]{{1, 2, 3}});
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][]{
+          {-1},
+          {-2},
+          {-3},
+        }
+      );
+
+      DoubleMatrix c = new DoubleMatrix(
+        new double[][]{
+          {-1, -4},
+          {-2, -5},
+          {-3, -6},
+        }
+      );
+
+      try {
+        DoubleMatrix.writeToFile(a, "tmp1.dat");
+        DoubleMatrix.writeToFile(b, "tmp2.dat");
+        DoubleMatrix.writeToFile(c, "tmp3.dat", ",");
+      }
+      catch(IOException ioe) {
+        ioe.printStackTrace();
+        System.exit(1);
+      }
+
+      DoubleMatrix d, e, f;
+      d = e = f = null;
+      try {
+        d = DoubleMatrix.readFromFile("tmp1.dat");
+        e = DoubleMatrix.readFromFile("tmp2.dat");
+        f = DoubleMatrix.readFromFile("tmp3.dat", ",");
+      }
+      catch(IOException ioe) {
+        ioe.printStackTrace();
+        System.exit(1);
+      }
+
+      assert a.isEqual(d);
+      assert b.isEqual(e);
+      assert c.isEqual(f);
+    } // end of block
 
     System.err.println();
     System.err.println("テスト完了");
