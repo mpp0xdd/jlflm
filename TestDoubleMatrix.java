@@ -621,6 +621,51 @@ public class TestDoubleMatrix {
       assert d.isEqual(e.mul(f));
     } // end of block
 
+
+    { // 自分自身に対する加算と減算の動作確認
+      double[][] val = {
+        {1, 2, 3},
+        {4, 5, 6},
+      };
+
+      DoubleMatrix a = new DoubleMatrix(val);
+
+      DoubleMatrix b = new DoubleMatrix(val);
+
+      DoubleMatrix c = new DoubleMatrix(
+        new double[][]{
+          {2, 2, 2},
+          {2, 2, 2},
+        }
+      );
+
+      DoubleMatrix d = new DoubleMatrix(
+        new double[][]{
+          {3, 4, 5},
+          {6, 7, 8},
+        }
+      );
+
+      assert !a.isEqual(d);
+      a.addeq(c);
+      assert a.isEqual(d);
+
+      a.subeq(c);
+      assert !a.isEqual(d);
+      assert a.isEqual(b);
+    } // end of block
+
+
+    { // 自分自身の定数倍の動作確認
+      DoubleMatrix a = new DoubleMatrix(new double[][]{{1, 2, 3}});
+
+      DoubleMatrix b = new DoubleMatrix(new double[][]{{12, 24, 36}});
+
+      assert !a.isEqual(b);
+      a.muleq(12);
+      assert a.isEqual(b);
+    }
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

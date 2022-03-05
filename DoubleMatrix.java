@@ -176,6 +176,20 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  public DoubleMatrix addeq(DoubleMatrix val) {
+    if(!this.isTypeEqual(val)) {
+      return null;
+    }
+
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        this.matrix[i][j] += val.get(i, j);
+      }
+    }
+
+    return this;
+  }
+
   public DoubleMatrix sub(DoubleMatrix val) {
     if(!this.isTypeEqual(val)) {
       return null;
@@ -189,6 +203,20 @@ public class DoubleMatrix {
     }
 
     return (new DoubleMatrix(result, false, false));
+  }
+
+  public DoubleMatrix subeq(DoubleMatrix val) {
+    if(!this.isTypeEqual(val)) {
+      return null;
+    }
+
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        this.matrix[i][j] -= val.get(i, j);
+      }
+    }
+
+    return this;
   }
 
   public DoubleMatrix mul(double k) {
@@ -217,6 +245,15 @@ public class DoubleMatrix {
     }
 
     return (new DoubleMatrix(result, false, false));
+  }
+
+  public DoubleMatrix muleq(double k) {
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        this.matrix[i][j] *= k;
+      }
+    }
+    return this;
   }
 
   public DoubleMatrix trs() {
