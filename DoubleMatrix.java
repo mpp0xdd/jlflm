@@ -10,9 +10,11 @@ import java.nio.file.Files;
 
 public class DoubleMatrix {
 
+  public static final String DEFAULT_DELIM = " ";
+
   public static void writeToFile(DoubleMatrix val, String filename, String delim)throws IOException {
     try(BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
-      String buf = delim.equals(" ")? val.toString() : val.toString().replace(" ", delim);
+      String buf = delim.equals(DEFAULT_DELIM)? val.toString() : val.toString().replace(DEFAULT_DELIM, delim);
       file.write(buf, 0, buf.length());
       file.flush();
     }
@@ -22,7 +24,7 @@ public class DoubleMatrix {
   }
 
   public static void writeToFile(DoubleMatrix val, String filename)throws IOException {
-    writeToFile(val, filename, " ");
+    writeToFile(val, filename, DEFAULT_DELIM);
   }
 
   public static DoubleMatrix readFromFile(String filename, String delim)throws IOException {
@@ -53,7 +55,7 @@ public class DoubleMatrix {
   }
 
   public static DoubleMatrix readFromFile(String filename)throws IOException {
-    return readFromFile(filename, " ");
+    return readFromFile(filename, DEFAULT_DELIM);
   }
 
   public static DoubleMatrix createDiagonalMatrix(double... entries) {
@@ -165,7 +167,7 @@ public class DoubleMatrix {
     for(int i = 0; i < this.rows; i++) {
       result.append(this.matrix[i][0]);
       for(int j = 1; j < this.columns; j++) {
-        result.append(" ");
+        result.append(DEFAULT_DELIM);
         result.append(this.matrix[i][j]);
       }
       result.append("\n");
