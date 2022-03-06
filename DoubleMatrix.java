@@ -58,6 +58,14 @@ public class DoubleMatrix {
     return readFromFile(filename, DEFAULT_DELIM);
   }
 
+  public static DoubleMatrix createRowVector(double... entries) {
+    return (new DoubleMatrix(1, entries.length, entries));
+  }
+
+  public static DoubleMatrix createColumnVector(double... entries) {
+    return (new DoubleMatrix(entries.length, 1, entries));
+  }
+
   public static DoubleMatrix createDiagonalMatrix(double... entries) {
     double[][] result = new double[entries.length][entries.length];
     for(int i = 0; i < entries.length; i++) {

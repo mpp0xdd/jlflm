@@ -770,6 +770,27 @@ public class TestDoubleMatrix {
       assert e.isEqual(f);
     } // end of block
 
+
+    { // createRowVector(), createColumnVector() の動作確認
+      DoubleMatrix a = DoubleMatrix.createRowVector(-3, -2, -1, 0);
+
+      DoubleMatrix b = new DoubleMatrix(new double[][]{{-3, -2, -1, 0}});
+
+      DoubleMatrix c = DoubleMatrix.createColumnVector(4, 5, 6, -9);
+
+      DoubleMatrix d = new DoubleMatrix(
+        new double[][]{
+          {4},
+          {5},
+          {6},
+          {-9},
+        }
+      );
+
+      assert a.isEqual(b);
+      assert c.isEqual(d);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()
