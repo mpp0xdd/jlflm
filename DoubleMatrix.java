@@ -103,7 +103,7 @@ public class DoubleMatrix {
     if(doValidate) {
       for(int i = 1; i < matrix.length; i++) {
         if(matrix[i].length != matrix[0].length) {
-          StringBuilder errMsgBuf = new StringBuilder("[エラー] 行列として解釈できません\n");
+          StringBuilder errMsgBuf = new StringBuilder("行列として解釈できません\n");
           final int loc = i;
           for(i = 0; i < matrix.length; i++) {
             errMsgBuf.append(Arrays.toString(matrix[i]));
@@ -144,9 +144,9 @@ public class DoubleMatrix {
     this(new double[rows][columns], false, false);
 
     if(entries.length > this.size) {
-      throw (new IllegalArgumentException("[エラー] 第3引数以降の成分の数が多すぎます"));
+      throw (new IllegalArgumentException("第3引数以降の成分の数が多すぎます"));
     } else if(entries.length < this.size) {
-      throw (new IllegalArgumentException("[エラー] 第3引数以降の成分の数が少なすぎます"));
+      throw (new IllegalArgumentException("第3引数以降の成分の数が少なすぎます"));
     }
 
     for(int i = 0; i < this.rows; i++) {
