@@ -716,6 +716,60 @@ public class TestDoubleMatrix {
       assert c.isEqual(f);
     } // end of block
 
+
+    { // DoubleMatrix(int, int), DoubleMatrix(int, int, double...) の動作確認
+      DoubleMatrix a = new DoubleMatrix(5, 1);
+
+      DoubleMatrix b = new DoubleMatrix(
+        new double[][]{
+          {0},
+          {0},
+          {0},
+          {0},
+          {0},
+        }
+      );
+
+      DoubleMatrix c = new DoubleMatrix(4, 5);
+
+      DoubleMatrix d = new DoubleMatrix(
+        new double[][]{
+          {0, 0, 0, 0, 0},
+          {0, 0, 0, 0, 0},
+          {0, 0, 0, 0, 0},
+          {0, 0, 0, 0, 0},
+        }
+      );
+
+      DoubleMatrix e = new DoubleMatrix(2, 2, 1, 2, 3, 4);
+
+      DoubleMatrix f = new DoubleMatrix(
+        new double[][]{
+          {1, 2},
+          {3, 4},
+        }
+      );
+
+
+      try {
+        DoubleMatrix g = new DoubleMatrix(2, 2, 1, 2, 3);
+      }
+      catch(IllegalArgumentException iae) {
+        System.out.println("new DoubleMatrix(2, 2, 1, 2, 3) => " + iae);
+      }
+
+      try {
+        DoubleMatrix g = new DoubleMatrix(2, 2, 1, 2, 3, 4, 5);
+      }
+      catch(IllegalArgumentException iae) {
+        System.out.println("new DoubleMatrix(2, 2, 1, 2, 3, 4, 5) => " + iae);
+      }
+
+      assert a.isEqual(b);
+      assert c.isEqual(d);
+      assert e.isEqual(f);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

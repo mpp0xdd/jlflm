@@ -136,6 +136,26 @@ public class DoubleMatrix {
     this(matrix, true, true);
   }
 
+  public DoubleMatrix(int rows, int columns) {
+    this(new double[rows][columns], false, false);
+  }
+
+  public DoubleMatrix(int rows, int columns, double... entries) {
+    this(new double[rows][columns], false, false);
+
+    if(entries.length > this.size) {
+      throw (new IllegalArgumentException("[エラー] 第3引数以降の成分の数が多すぎます"));
+    } else if(entries.length < this.size) {
+      throw (new IllegalArgumentException("[エラー] 第3引数以降の成分の数が少なすぎます"));
+    }
+
+    for(int i = 0; i < this.rows; i++) {
+      for(int j = 0; j < this.columns; j++) {
+        this.matrix[i][j] = entries[i * this.columns + j];
+      }
+    }
+  }
+
   public boolean isTypeEqual(DoubleMatrix val) {
     return (this.rows == val.rows && this.columns == val.columns);
   }
