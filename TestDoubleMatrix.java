@@ -791,6 +791,67 @@ public class TestDoubleMatrix {
       assert c.isEqual(d);
     } // end of block
 
+
+    { // 行列の水平方向，垂直方向への結合の動作確認
+
+      DoubleMatrix a = DoubleMatrix.createColumnVector(-1, 2, 3);
+      DoubleMatrix b = DoubleMatrix.createColumnVector(1, -2, 3);
+      DoubleMatrix c = DoubleMatrix.createColumnVector(1, 2, -3);
+
+      DoubleMatrix d = new DoubleMatrix(
+        new double[][]{
+          {-1, 1, 1},
+          {2, -2, 2},
+          {3, 3, -3},
+        }
+      );
+
+      DoubleMatrix e = new DoubleMatrix(
+        new double[][]{
+          {1, 2, 3},
+          {4, 5, 6},
+        }
+      );
+
+      DoubleMatrix f = new DoubleMatrix(
+        new double[][]{
+          {1, 2, 3, 1, 2, 3},
+          {4, 5, 6, 4, 5, 6},
+        }
+      );
+
+      DoubleMatrix g = new DoubleMatrix(
+        new double[][]{
+          {1, 2, 3, 1, 2, 3},
+          {4, 5, 6, 4, 5, 6},
+          {1, 2, 3, 1, 2, 3},
+          {4, 5, 6, 4, 5, 6},
+          {1, 2, 3, 1, 2, 3},
+          {4, 5, 6, 4, 5, 6},
+        }
+      );
+
+      try {
+        DoubleMatrix h = DoubleMatrix.combineHorizontally(f, g);
+      }
+      catch(IllegalArgumentException iae) {
+        System.err.println("DoubleMatrix.combineHorizontally(f, g) => " + iae);
+      }
+
+      try {
+        DoubleMatrix h = DoubleMatrix.combineVertically(e, f, e);
+      }
+      catch(IllegalArgumentException iae) {
+        System.err.println("DoubleMatrix.combineVertically(e, f, e) => " + iae);
+      }
+
+      assert d.isEqual(DoubleMatrix.combineHorizontally(a, b, c));
+      assert d.trs().isEqual(DoubleMatrix.combineVertically(a.trs(), b.trs(), c.trs()));
+
+      assert f.isEqual(DoubleMatrix.combineHorizontally(e, e));
+      assert g.isEqual(DoubleMatrix.combineVertically(f, f, f));
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

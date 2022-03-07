@@ -58,6 +58,80 @@ public class DoubleMatrix {
     return readFromFile(filename, DEFAULT_DELIM);
   }
 
+  public static DoubleMatrix combineHorizontally(DoubleMatrix... vals) {
+    final int rows = vals[0].rows;
+    int columns = vals[0].columns;
+
+    for(int k = 1; k < vals.length; k++) {
+      if(vals[k].rows != rows) {
+        StringBuilder errMsgBuf = new StringBuilder(
+          "行列の行数が揃っていません。水平方向への結合に失敗しました\n");
+        final int loc = k;
+        for(k = 0; k < vals.length; k++) {
+          if(k == loc) {
+            errMsgBuf.append("vals[" + k + "] <--\n");
+          } else {
+            errMsgBuf.append("vals[" + k + "]\n");
+          }
+          errMsgBuf.append(vals[k]);
+        }
+        throw (new IllegalArgumentException(errMsgBuf.toString()));
+      }
+
+      columns += vals[k].columns;
+    }
+
+    double[][] result = new double[rows][columns];
+    int pos = 0;
+    for(int k = 0; k < vals.length; k++) {
+      for(int i = 0; i < rows; i++) {
+        for(int j = 0; j < vals[k].columns; j++) {
+          result[i][j + pos] = vals[k].get(i, j);
+        }
+      }
+      pos += vals[k].columns;
+    }
+
+    return (new DoubleMatrix(result, false, false));
+  }
+
+  public static DoubleMatrix combineVertically(DoubleMatrix... vals) {
+    int rows = vals[0].rows;
+    final int columns = vals[0].columns;
+
+    for(int k = 1; k < vals.length; k++) {
+      if(vals[k].columns != columns) {
+        StringBuilder errMsgBuf = new StringBuilder(
+          "行列の列数が揃っていません。垂直方向への結合に失敗しました\n");
+        final int loc = k;
+        for(k = 0; k < vals.length; k++) {
+          if(k == loc) {
+            errMsgBuf.append("vals[" + k + "] <--\n");
+          } else {
+            errMsgBuf.append("vals[" + k + "]\n");
+          }
+          errMsgBuf.append(vals[k]);
+        }
+        throw (new IllegalArgumentException(errMsgBuf.toString()));
+      }
+
+      rows += vals[k].rows;
+    }
+
+    double[][] result = new double[rows][columns];
+    int pos = 0;
+    for(int k = 0; k < vals.length; k++) {
+      for(int i = 0; i < vals[k].rows; i++) {
+        for(int j = 0; j < columns; j++) {
+          result[i + pos][j] = vals[k].get(i, j);
+        }
+      }
+      pos += vals[k].rows;
+    }
+
+    return (new DoubleMatrix(result, false, false));
+  }
+
   public static DoubleMatrix createRowVector(double... entries) {
     return (new DoubleMatrix(1, entries.length, entries));
   }
