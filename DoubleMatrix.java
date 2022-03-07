@@ -42,9 +42,9 @@ public class DoubleMatrix {
       }
     }
     catch(NumberFormatException nfe) {
-      System.err.printf("[エラー] %s:%d: %s\n", filename, rows.size() + 1, line);
-      nfe.printStackTrace();
-      System.exit(1);
+      IOException ioe = new IOException(String.format("%s:%d: %s\n", filename, rows.size() + 1, line));
+      ioe.initCause(nfe);
+      throw ioe;
     }
     catch(IOException ioe) {
       throw ioe;

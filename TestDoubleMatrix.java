@@ -1,8 +1,22 @@
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 
 
 // Usage: java -ea TestDoubleMatrix
 public class TestDoubleMatrix {
+
+  public static void writeToFile(String filename, String str)throws IOException {
+    try(BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
+      file.write(str, 0, str.length());
+      file.flush();
+    }
+    catch(IOException ioe) {
+      throw ioe;
+    }
+  }
+
   public static void main(String[] args) {
 
     { // 引数の配列が不正な場合を確認
@@ -850,6 +864,18 @@ public class TestDoubleMatrix {
 
       assert f.isEqual(DoubleMatrix.combineHorizontally(e, e));
       assert g.isEqual(DoubleMatrix.combineVertically(f, f, f));
+    } // end of block
+
+
+    { // ファイルの形式に誤りがあった場合の例外を確認
+      try {
+        writeToFile("tmpe1.dat", "2 3 4\n6 u 9\n");
+        DoubleMatrix a = DoubleMatrix.readFromFile("tmpe1.dat");
+      }
+      catch(IOException ioe) {
+        System.err.print("DoubleMatrix.readFromFile(\"tmpe1.dat\") => ");
+        ioe.printStackTrace();
+      }
     } // end of block
 
     System.err.println();
