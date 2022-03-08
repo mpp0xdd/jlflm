@@ -8,10 +8,41 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 
 
+/**
+ * double型2次元配列をラップし，行列として扱えるようにするクラスです。<br>
+ * つまり，このクラスにラップされたdouble型2次元配列は，a.length * a[0].lengthの計算結果の値が<br>
+ * 2次元配列の全ての要素数に等しいことが保証されます。<br>
+ * <br>
+ * また，このクラスはラップ元のdouble型2次元配列の完全なコピーを内部に保持するという仕様のため，<br>
+ * ラップ元配列の値に変更があっても，その影響を受けません。
+ *
+ * @author mpp0xdd
+ */
 public class DoubleMatrix {
 
+  /**
+   * この行列を文字列として表現するときに各成分の間に挿入されるデフォルトの区切り文字を表します。
+   */
   public static final String DEFAULT_DELIM = " ";
 
+  /**
+   * 行列の文字列表現をファイルに書き込みます。<br>
+   * 以下は，行列をCSVファイルとして書き出す例です。
+   * <pre>{@code
+   * DoubleMatrix a = new DoubleMatrix(
+   *   new double[][]{
+   *     {1, 2},
+   *     {1, 2},
+   *     {1, 2},
+   *   }
+   * );
+   * DoubleMatrix.writeToFile(a, "mat.csv", ",");
+   * }</pre>
+   * @param val 行列
+   * @param filename ファイル名
+   * @param delim 各要素間の区切り文字
+   * @throws IOException 入出力エラーが発生した場合
+   */
   public static void writeToFile(DoubleMatrix val, String filename, String delim)throws IOException {
     try(BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
       String buf = delim.equals(DEFAULT_DELIM)? val.toString() : val.toString().replace(DEFAULT_DELIM, delim);
@@ -23,10 +54,34 @@ public class DoubleMatrix {
     }
   }
 
+  /**
+   * 行列の文字列表現をファイルに書き込みます。<br>
+   * 各要素の間の区切り文字にはDEFAULT_DELIMが使われます。
+   * @param val 行列
+   * @param filename ファイル名
+   * @see #DEFAULT_DELIM
+   * @throws IOException 入出力エラーが発生した場合
+   */
   public static void writeToFile(DoubleMatrix val, String filename)throws IOException {
     writeToFile(val, filename, DEFAULT_DELIM);
   }
 
+  /**
+   * 行列の文字列表現が書き込まれたファイルを読み込み，行列を生成します。<br>
+   * 以下は，CSVファイルに書き込まれた行列を読み込む例です。
+   * <pre>{@code
+   * // mat.csvが以下の内容でカレントディレクトリ内に存在するとする
+   * // 1.0,2.0
+   * // 1.0,2.0
+   * // 1.0,2.0
+   * DoubleMatrix a = DoubleMatrix.readFromFile("mat.csv", ",");
+   * }</pre>
+   * @param filename ファイル名
+   * @param delim 各要素間の区切り文字
+   * @return ファイルから読み込んだ行列
+   * @throws IOException 入出力エラーが発生した場合
+   * @throws IllegalArgumentException ファイルの内容を行列として解釈できない場合
+   */
   public static DoubleMatrix readFromFile(String filename, String delim)throws IOException {
     ArrayList<double[]> rows = new ArrayList<double[]>();
     String line = null;
@@ -54,10 +109,33 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, true, false));
   }
 
+  /**
+   * 行列の文字列表現が書き込まれたファイルを読み込み，行列を生成します。<br>
+   * 各要素の間の区切り文字にはDEFAULT_DELIMが使われます。
+   * @param filename ファイル名
+   * @return ファイルから読み込んだ行列
+   * @see #DEFAULT_DELIM
+   * @throws IOException 入出力エラーが発生した場合
+   * @throws IllegalArgumentException ファイルの内容を行列として解釈できない場合
+   */
   public static DoubleMatrix readFromFile(String filename)throws IOException {
     return readFromFile(filename, DEFAULT_DELIM);
   }
 
+  /**
+   * 任意の個数の行列を水平方向に連結した行列を生成し，それを返します。<br>
+   * 以下は列ベクトルを並べて行列を生成する例です。
+   * <pre>{@code
+   * DoubleMatrix x = DoubleMatrix.createColumnVector(1, 2, 3);
+   * DoubleMatrix y = DoubleMatrix.createColumnVector(4, 5, 6);
+   * DoubleMatrix z = DoubleMatrix.createColumnVector(7, 8, 9);
+   * DoubleMatrix A = DoubleMatrix.combineHorizontally(x, y, z);
+   * }</pre>
+   * @param vals 任意の個数の行列
+   * @return 連結結果の行列
+   * @throws IllegalArgumentException 行列の連結が出来ない(行数が異なっている)場合
+   * @see #createColumnVector(double...)
+   */
   public static DoubleMatrix combineHorizontally(DoubleMatrix... vals) {
     final int rows = vals[0].rows;
     int columns = vals[0].columns;
@@ -95,6 +173,20 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * 任意の個数の行列を垂直方向に連結した行列を生成し，それを返します。<br>
+   * 以下は行ベクトルを並べて行列を生成する例です。
+   * <pre>{@code
+   * DoubleMatrix x = DoubleMatrix.createRowVector(1, 2, 3);
+   * DoubleMatrix y = DoubleMatrix.createRowVector(4, 5, 6);
+   * DoubleMatrix z = DoubleMatrix.createRowVector(7, 8, 9);
+   * DoubleMatrix A = DoubleMatrix.combineVertically(x, y, z);
+   * }</pre>
+   * @param vals 任意の個数の行列
+   * @return 連結結果の行列
+   * @throws IllegalArgumentException 行列の連結が出来ない(列数が異なっている)場合
+   * @see #createRowVector(double...)
+   */
   public static DoubleMatrix combineVertically(DoubleMatrix... vals) {
     int rows = vals[0].rows;
     final int columns = vals[0].columns;
@@ -132,14 +224,29 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * 行ベクトルを生成して，それを返します。
+   * @param entries 行ベクトルの成分
+   * @return 行ベクトル
+   */
   public static DoubleMatrix createRowVector(double... entries) {
     return (new DoubleMatrix(1, entries.length, entries));
   }
 
+  /**
+   * 列ベクトルを生成して，それを返します。
+   * @param entries 列ベクトルの成分
+   * @return 列ベクトル
+   */
   public static DoubleMatrix createColumnVector(double... entries) {
     return (new DoubleMatrix(entries.length, 1, entries));
   }
 
+  /**
+   * 対角行列を生成して，それを返します。
+   * @param entries 対角成分
+   * @return 対角行列
+   */
   public static DoubleMatrix createDiagonalMatrix(double... entries) {
     double[][] result = new double[entries.length][entries.length];
     for(int i = 0; i < entries.length; i++) {
@@ -148,6 +255,11 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * 単位行列を生成して，それを返します。
+   * @param n 行列の次数
+   * @return 単位行列
+   */
   public static DoubleMatrix createIdentityMatrix(int n) {
     double[][] result = new double[n][n];
     for(int i = 0; i < n; i++) {
@@ -156,6 +268,11 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * 行列が対称かどうか判定して，結果の真偽値を返します。
+   * @param val 判定対象の行列
+   * @return 対称行列なら，true
+   */
   public static boolean isSymmetricMatrix(DoubleMatrix val) {
     if(val.rows != val.columns) {
       return false;
@@ -176,11 +293,28 @@ public class DoubleMatrix {
     return true;
   }
 
+  /** 行列を表すdouble型2次元配列です。*/
   private final double[][] matrix;
+
+  /** この行列の行数を表します。 */
   public final int rows;
+
+  /** この行列の列数を表します。 */
   public final int columns;
+
+  /** この行列のサイズ(rows * columnsの計算結果)を表します。 */
   public final int size;
 
+  /**
+   * このクラスのコードを直接触るプログラマのために用意された，privateなコンストラクタです。<br>
+   * ラップ元のmatrixを行列として解釈してもよいかどうか検証する機能や，matrixの完全なコピーを取る機能を提供します。<br>
+   * なお，ここでの検証とは，matrix.length * matrix[0].lengthの計算結果の値がmatrixの全要素数と等しいかどうか確認するプロセスのことです。<br>
+   * @param matrix ラップ元のdouble型2次元配列への参照。
+   * @param doValidate trueなら検証を行います。
+   * @param doCopy trueならmatrixの完全なコピーを作成し，それをthis.matrixに保持します。
+   *               falseの場合はmatrixへの参照をそのままthis.matrixに保持します。
+   * @throws IllegalArgumentException 検証した結果，matrixを行列として解釈できない場合
+   */
   private DoubleMatrix(double[][] matrix, boolean doValidate, boolean doCopy) {
     if(doValidate) {
       for(int i = 1; i < matrix.length; i++) {
@@ -214,14 +348,31 @@ public class DoubleMatrix {
     }
   }
 
+  /**
+   * 引数で渡されたdouble型2次元配列の内容で行列を生成します。
+   * @param matrix 行列を表すdouble型2次元配列
+   * @throws IllegalArgumentException matrixを行列として解釈できない場合
+   */
   public DoubleMatrix(double[][] matrix) {
     this(matrix, true, true);
   }
 
+  /**
+   * 型がrows * columnsで成分の値が全て0dの行列を生成します。
+   * @param rows 行列の行数
+   * @param columns 行列の列数
+   */
   public DoubleMatrix(int rows, int columns) {
     this(new double[rows][columns], false, false);
   }
 
+  /**
+   * 型がrows * columnsの行列を生成し，各成分の値を左上から右下にかけて順に初期化します。<br>
+   * @param rows 行列の行数
+   * @param columns 行列の列数
+   * @param entries 初期化に使用するrows * columns個のdouble値
+   * @throws IllegalArgumentException entries.length != rows * columnsの場合
+   */
   public DoubleMatrix(int rows, int columns, double... entries) {
     this(new double[rows][columns], false, false);
 
@@ -238,10 +389,20 @@ public class DoubleMatrix {
     }
   }
 
+  /**
+   * thisの型(rows * columns)とvalの型が等しいなら真を返します。
+   * @param val 任意の行列
+   * @return 型が等しいならtrue
+   */
   public boolean isTypeEqual(DoubleMatrix val) {
     return (this.rows == val.rows && this.columns == val.columns);
   }
 
+  /**
+   * thisとvalが等価な行列なら真を返します。
+   * @param val 任意の行列
+   * @return this = valならtrue
+   */
   public boolean isEqual(DoubleMatrix val) {
     if(this == val) {
       return true;
@@ -262,6 +423,12 @@ public class DoubleMatrix {
     return true;
   }
 
+  /**
+   * この行列の文字列表現を返します。<br>
+   * 各成分の間を区切る文字にはDEFAULT_DELIMが使用されます。
+   * @return この行列の文字列表現
+   * @see #DEFAULT_DELIM
+   */
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();
@@ -278,14 +445,35 @@ public class DoubleMatrix {
     return result.toString();
   }
 
+  /**
+   * 行列の(i, j)成分を取得します。
+   * @param i i
+   * @param j j
+   * @return (i, j)成分の値
+   * @throws ArrayIndexOutOfBoundsException iまたはjの値が不正な添え字の場合
+   */
   public double get(int i, int j) {
     return this.matrix[i][j];
   }
 
+  /**
+   * 行列の(i, j)成分を指定された値に置き換えます。
+   * @param i i
+   * @param j j
+   * @param entry 格納される値
+   * @throws ArrayIndexOutOfBoundsException iまたはjの値が不正な添え字の場合
+   */
   public void set(int i, int j, double entry) {
     this.matrix[i][j] = entry;
   }
 
+  /**
+   * 行の入れ替えを行います。ただし，i1 == i2なら何も行いません。<br>
+   * なお，i1 == i2 でも，i1またはi2の値が行列の添え字の範囲を逸脱している場合は例外をスローします。
+   * @param i1 任意の行番号
+   * @param i2 任意の行番号
+   * @throws ArrayIndexOutOfBoundsException i1またはi2の値が不正な添え字の場合
+   */
   public void swapRows(int i1, int i2) {
     // 引数が同じなら交換処理を行う必要がないので何もせずreturnする
     if(i1 == i2) {
@@ -301,6 +489,13 @@ public class DoubleMatrix {
     this.matrix[i2] = tmp;
   }
 
+  /**
+   * 列の入れ替えを行います。ただし，j1 == j2なら何も行いません。<br>
+   * なお，j1 == j2 でも，j1またはj2の値が行列の添え字の範囲を逸脱している場合は例外をスローします。
+   * @param j1 任意の列番号
+   * @param j2 任意の列番号
+   * @throws ArrayIndexOutOfBoundsException j1またはj2の値が不正な添え字の場合
+   */
   public void swapColumns(int j1, int j2) {
     // 引数が同じなら交換処理を行う必要がないので何もせずreturnする
     if(j1 == j2) {
@@ -318,6 +513,12 @@ public class DoubleMatrix {
     }
   }
 
+  /**
+   * this + valを計算し，結果の行列を返します。<br>
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * @param val この行列に加算する行列。
+   * @return this + val
+   */
   public DoubleMatrix add(DoubleMatrix val) {
     if(!this.isTypeEqual(val)) {
       return null;
@@ -333,6 +534,12 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * this += valを計算し，thisを返します。<br>
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * @param val この行列に加算する行列。
+   * @return this
+   */
   public DoubleMatrix addeq(DoubleMatrix val) {
     if(!this.isTypeEqual(val)) {
       return null;
@@ -347,6 +554,12 @@ public class DoubleMatrix {
     return this;
   }
 
+  /**
+   * this - valを計算し，結果の行列を返します。<br>
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * @param val この行列から減算する行列。
+   * @return this - val
+   */
   public DoubleMatrix sub(DoubleMatrix val) {
     if(!this.isTypeEqual(val)) {
       return null;
@@ -362,6 +575,12 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * this -= valを計算し，thisを返します。<br>
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * @param val この行列から減算する行列。
+   * @return this
+   */
   public DoubleMatrix subeq(DoubleMatrix val) {
     if(!this.isTypeEqual(val)) {
       return null;
@@ -376,6 +595,11 @@ public class DoubleMatrix {
     return this;
   }
 
+  /**
+   * thisをk倍した行列を返します。
+   * @param k この行列に乗算する値。
+   * @return this * k
+   */
   public DoubleMatrix mul(double k) {
     double[][] result = new double[this.rows][this.columns];
     for(int i = 0; i < this.rows; i++) {
@@ -387,6 +611,12 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * this * valを計算し，結果の行列を返します。<br>
+   * ただし，thisの列数とvalの行数が異なり，計算を実行できない場合は，nullを返します。
+   * @param val この行列に乗算する行列。
+   * @return this * val
+   */
   public DoubleMatrix mul(DoubleMatrix val) {
     if(this.columns != val.rows) {
       return null;
@@ -404,6 +634,11 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * this *= kを計算し，thisを返します。
+   * @param k この行列に乗算する値。
+   * @return this
+   */
   public DoubleMatrix muleq(double k) {
     for(int i = 0; i < this.rows; i++) {
       for(int j = 0; j < this.columns; j++) {
@@ -413,6 +648,10 @@ public class DoubleMatrix {
     return this;
   }
 
+  /**
+   * thisを転置した行列を返します。
+   * @return t^this
+   */
   public DoubleMatrix trs() {
     double[][] result = new double[this.columns][this.rows];
     for(int i = 0; i < this.rows; i++) {
