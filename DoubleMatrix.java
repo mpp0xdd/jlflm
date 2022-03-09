@@ -48,7 +48,7 @@ public class DoubleMatrix {
    */
   public static void writeToFile(DoubleMatrix val, String filename, String delim)throws IOException {
     try(BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
-      String buf = delim.equals(DEFAULT_DELIM)? val.toString() : val.toString().replace(DEFAULT_DELIM, delim);
+      String buf = val.toString(delim);
       file.write(buf, 0, buf.length());
       file.flush();
     }
@@ -455,6 +455,33 @@ public class DoubleMatrix {
     }
 
     return result.toString();
+  }
+
+  /**
+   * この行列の文字列表現を指定された区切り文字を使用して生成し，それを返します。<br>
+   * <br>
+   * 実行例
+   * <pre>{@code
+   * DoubleMatrix a = new DoubleMatrix(3, 4);
+   * System.out.print(a.toString("|"));
+   * }</pre>
+   * 実行結果
+   * <pre>{@code
+   * 0.0|0.0|0.0|0.0
+   * 0.0|0.0|0.0|0.0
+   * 0.0|0.0|0.0|0.0
+   * }</pre>
+   * @param delim 各要素間の区切り文字
+   * @return この行列の文字列表現
+   */
+  public String toString(String delim) {
+    String result = this.toString();
+
+    if(!DEFAULT_DELIM.equals(delim)) {
+      result = result.replace(DEFAULT_DELIM, delim);
+    }
+
+    return result;
   }
 
   /**

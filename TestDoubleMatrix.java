@@ -191,6 +191,7 @@ public class TestDoubleMatrix {
     { // toString() の呼び出し
       DoubleMatrix a = new DoubleMatrix(new double[][]{{0,  1,  2}});
       System.out.println(a);
+      System.out.println(a.toString(","));
 
       DoubleMatrix b = new DoubleMatrix(
         new double[][]{
@@ -200,6 +201,7 @@ public class TestDoubleMatrix {
         }
       );
       System.out.println(b);
+      System.out.println(b.toString(";"));
 
       DoubleMatrix c = new DoubleMatrix(
         new double[][]{
@@ -209,6 +211,7 @@ public class TestDoubleMatrix {
         }
       );
       System.out.print(c);
+      System.out.print(c.toString(" | "));
     } // end of block
 
 
