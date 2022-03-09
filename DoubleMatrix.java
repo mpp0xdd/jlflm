@@ -21,12 +21,15 @@ import java.nio.file.Files;
 public class DoubleMatrix {
 
   /**
-   * この行列を文字列として表現するときに各成分の間に挿入されるデフォルトの区切り文字を表します。
+   * この行列を文字列として表現するとき(オーバライドされたtoString()の呼び出し時)に各成分の間に挿入される区切り文字を表します。<br>
+   * オーバライドされたtoString()は，ここで指定された区切り文字を使用して，行列の内容を文字列に変換します。<br>
+   * また，この値を変更した場合，toString()のjavadocに記載されている実行例の変更も同時に行う必要があることに注意してください。
+   * @see #toString()
    */
-  public static final String DEFAULT_DELIM = " ";
+  private static final String DEFAULT_DELIM = " ";
 
   /**
-   * 行列の文字列表現をファイルに書き込みます。<br>
+   * 行列の文字列表現を指定された区切り文字を使用してファイルに書き込みます。<br>
    * 以下は，行列をCSVファイルとして書き出す例です。
    * <pre>{@code
    * DoubleMatrix a = new DoubleMatrix(
@@ -55,19 +58,18 @@ public class DoubleMatrix {
   }
 
   /**
-   * 行列の文字列表現をファイルに書き込みます。<br>
-   * 各要素の間の区切り文字にはDEFAULT_DELIMが使われます。
+   * 行列の文字列表現(toString()の実行結果)をファイルに書き込みます。
    * @param val 行列
    * @param filename ファイル名
-   * @see #DEFAULT_DELIM
    * @throws IOException 入出力エラーが発生した場合
+   * @see #toString()
    */
   public static void writeToFile(DoubleMatrix val, String filename)throws IOException {
     writeToFile(val, filename, DEFAULT_DELIM);
   }
 
   /**
-   * 行列の文字列表現が書き込まれたファイルを読み込み，行列を生成します。<br>
+   * 行列の文字列表現が書き込まれたファイルを，各成分の間の区切り文字を指定して読み込み，行列を生成します。<br>
    * 以下は，CSVファイルに書き込まれた行列を読み込む例です。
    * <pre>{@code
    * // mat.csvが以下の内容でカレントディレクトリ内に存在するとする
@@ -110,13 +112,12 @@ public class DoubleMatrix {
   }
 
   /**
-   * 行列の文字列表現が書き込まれたファイルを読み込み，行列を生成します。<br>
-   * 各要素の間の区切り文字にはDEFAULT_DELIMが使われます。
+   * 行列の文字列表現(toString()の実行結果)が書き込まれたファイルを読み込み，行列を生成します。<br>
    * @param filename ファイル名
    * @return ファイルから読み込んだ行列
-   * @see #DEFAULT_DELIM
    * @throws IOException 入出力エラーが発生した場合
    * @throws IllegalArgumentException ファイルの内容を行列として解釈できない場合
+   * @see #toString()
    */
   public static DoubleMatrix readFromFile(String filename)throws IOException {
     return readFromFile(filename, DEFAULT_DELIM);
@@ -425,9 +426,20 @@ public class DoubleMatrix {
 
   /**
    * この行列の文字列表現を返します。<br>
-   * 各成分の間を区切る文字にはDEFAULT_DELIMが使用されます。
+   * <br>
+   * 実行例
+   * <pre>{@code
+   * DoubleMatrix a = new DoubleMatrix(3, 4);
+   * System.out.print(a);
+   * }</pre>
+   * 実行結果
+   * <pre>{@code
+   * 0.0 0.0 0.0 0.0
+   * 0.0 0.0 0.0 0.0
+   * 0.0 0.0 0.0 0.0
+   * }</pre>
    * @return この行列の文字列表現
-   * @see #DEFAULT_DELIM
+   * @see #DoubleMatrix(int, int)
    */
   @Override
   public String toString() {
