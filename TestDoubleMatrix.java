@@ -881,6 +881,23 @@ public class TestDoubleMatrix {
       }
     } // end of block
 
+
+    { // コピーコンストラクタの動作確認
+      DoubleMatrix a = new DoubleMatrix(
+        new double[][]{
+          {0, 1, 2},
+          {3, 4, 5},
+          {6, 7, 8},
+        }
+      );
+
+      DoubleMatrix b = new DoubleMatrix(a); // aの内容でbを作成
+
+      assert a.isEqual(b);
+      a.set(1, 1, -9);
+      assert !a.isEqual(b);
+    } // end of block
+
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()

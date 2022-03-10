@@ -391,6 +391,14 @@ public class DoubleMatrix {
   }
 
   /**
+   * コピーコンストラクタです。
+   * @param val コピー元の行列
+   */
+  public DoubleMatrix(DoubleMatrix val) {
+    this(val.matrix, false, true);
+  }
+
+  /**
    * thisの型(rows * columns)とvalの型が等しいなら真を返します。
    * @param val 任意の行列
    * @return 型が等しいならtrue
