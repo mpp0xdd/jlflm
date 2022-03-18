@@ -16,7 +16,7 @@ import java.nio.file.Files;
  * また，このクラスはラップ元のdouble型2次元配列の完全なコピーを内部に保持するという仕様のため，<br>
  * ラップ元配列の値に変更があっても，その影響を受けません。
  *
- * @author mpp0xdd
+ * @author mpp
  */
 public class DoubleMatrix {
 
