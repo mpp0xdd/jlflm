@@ -3,8 +3,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-// Usage: java -ea TestDoubleMatrix
-public class TestDoubleMatrix {
+// Usage: java -ea DoubleMatrixTest
+public class DoubleMatrixTest {
 
   @FunctionalInterface
   interface Test {
