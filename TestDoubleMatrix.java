@@ -6,29 +6,53 @@ import java.nio.file.Paths;
 // Usage: java -ea TestDoubleMatrix
 public class TestDoubleMatrix {
 
-  public static void writeToFile(String filename, String str) throws IOException {
+  @FunctionalInterface
+  interface Test {
+    void test() throws Exception;
+
+    static void assertThrows(Class<? extends Exception> expected, String code, Test test) {
+      Class<? extends Exception> actual;
+      String message;
+      try {
+        test.test();
+        actual = null;
+        message = null;
+      } catch (Exception e) {
+        actual = e.getClass();
+        message = e.getMessage();
+      }
+
+      System.err.println(code);
+      assert expected.equals(actual);
+      System.err.printf(" => Exception %s thrown as expected.\n", expected);
+      System.err.println(
+          message != null && !message.isEmpty()
+              ? message.replaceAll("(?m)^", "    ")
+              : "    No message.");
+      System.err.println("---------------------------------");
+    }
+  }
+
+  public static void writeToFile(String filename, String str) {
     try (BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
       file.write(str, 0, str.length());
       file.flush();
     } catch (IOException ioe) {
-      throw ioe;
+      ioe.printStackTrace();
     }
   }
 
   public static void main(String[] args) {
 
     { // 引数の配列が不正な場合を確認
-      try {
-        DoubleMatrix a = new DoubleMatrix(new double[][] {{0}, {1, 2}});
-      } catch (IllegalArgumentException iae) {
-        System.err.println(iae);
-      }
-
-      try {
-        DoubleMatrix a = new DoubleMatrix(new double[][] {{0, 1}, {1, 2}, {1, 2, 3}, {4, 5}});
-      } catch (IllegalArgumentException iae) {
-        System.err.println(iae);
-      }
+      Test.assertThrows(
+          IllegalArgumentException.class,
+          "new DoubleMatrix(new double[][] {{0}, {1, 2}})",
+          () -> new DoubleMatrix(new double[][] {{0}, {1, 2}}));
+      Test.assertThrows(
+          IllegalArgumentException.class,
+          "new DoubleMatrix(new double[][] {{0, 1}, {1, 2}, {1, 2, 3}, {4, 5}})",
+          () -> new DoubleMatrix(new double[][] {{0, 1}, {1, 2}, {1, 2, 3}, {4, 5}}));
     } // end of block
 
     { // rows, columns, sizeが正しく設定されているかを確認
@@ -144,12 +168,7 @@ public class TestDoubleMatrix {
                 {9, 10, -11},
               });
 
-      // 実引数がnullなら例外
-      try {
-        a.isEqual(null);
-      } catch (NullPointerException npe) {
-        System.err.println("a.isEqual(null) => " + npe);
-      }
+      Test.assertThrows(NullPointerException.class, "a.isEqual(null)", () -> a.isEqual(null));
 
       assert a.isEqual(a);
 
@@ -235,12 +254,7 @@ public class TestDoubleMatrix {
                 {0, 12},
               });
 
-      // 実引数がnullなら例外
-      try {
-        a.add(null);
-      } catch (NullPointerException npe) {
-        System.err.println("a.add(null) => " + npe);
-      }
+      Test.assertThrows(NullPointerException.class, "a.add(null)", () -> a.add(null));
 
       // 行数が異なる場合
       assert a.add(b) == null;
@@ -564,27 +578,16 @@ public class TestDoubleMatrix {
                 {1, 0, 0},
               });
 
-      try {
-        a.swapRows(-1, -1);
-      } catch (ArrayIndexOutOfBoundsException aioobe) {
-        System.out.println("a.swapRows(-1, -1) => " + aioobe);
-      }
-      try {
-        a.swapRows(100, 100);
-      } catch (ArrayIndexOutOfBoundsException aioobe) {
-        System.out.println("a.swapRows(100, 100) => " + aioobe);
-      }
-
-      try {
-        a.swapColumns(-1, -1);
-      } catch (ArrayIndexOutOfBoundsException aioobe) {
-        System.out.println("a.swapColumns(-1, -1) => " + aioobe);
-      }
-      try {
-        a.swapColumns(100, 100);
-      } catch (ArrayIndexOutOfBoundsException aioobe) {
-        System.out.println("a.swapColumns(100, 100) => " + aioobe);
-      }
+      Test.assertThrows(
+          ArrayIndexOutOfBoundsException.class, "a.swapRows(-1, -1)", () -> a.swapRows(-1, -1));
+      Test.assertThrows(
+          ArrayIndexOutOfBoundsException.class, "a.swapRows(100, 100)", () -> a.swapRows(100, 100));
+      Test.assertThrows(
+          ArrayIndexOutOfBoundsException.class, "a.swapColumns(-1, -1)", () -> a.swapRows(-1, -1));
+      Test.assertThrows(
+          ArrayIndexOutOfBoundsException.class,
+          "a.swapColumns(100, 100)",
+          () -> a.swapRows(100, 100));
 
       assert a.isEqual(b);
       assert b.isEqual(a);
@@ -711,17 +714,14 @@ public class TestDoubleMatrix {
                 {3, 4},
               });
 
-      try {
-        DoubleMatrix g = new DoubleMatrix(2, 2, 1, 2, 3);
-      } catch (IllegalArgumentException iae) {
-        System.out.println("new DoubleMatrix(2, 2, 1, 2, 3) => " + iae);
-      }
-
-      try {
-        DoubleMatrix g = new DoubleMatrix(2, 2, 1, 2, 3, 4, 5);
-      } catch (IllegalArgumentException iae) {
-        System.out.println("new DoubleMatrix(2, 2, 1, 2, 3, 4, 5) => " + iae);
-      }
+      Test.assertThrows(
+          IllegalArgumentException.class,
+          "new DoubleMatrix(2, 2, 1, 2, 3)",
+          () -> new DoubleMatrix(2, 2, 1, 2, 3));
+      Test.assertThrows(
+          IllegalArgumentException.class,
+          "new DoubleMatrix(2, 2, 1, 2, 3, 4, 5)",
+          () -> new DoubleMatrix(2, 2, 1, 2, 3, 4, 5));
 
       assert a.isEqual(b);
       assert c.isEqual(d);
@@ -783,17 +783,14 @@ public class TestDoubleMatrix {
                 {4, 5, 6, 4, 5, 6},
               });
 
-      try {
-        DoubleMatrix h = DoubleMatrix.combineHorizontally(f, g);
-      } catch (IllegalArgumentException iae) {
-        System.err.println("DoubleMatrix.combineHorizontally(f, g) => " + iae);
-      }
-
-      try {
-        DoubleMatrix h = DoubleMatrix.combineVertically(e, f, e);
-      } catch (IllegalArgumentException iae) {
-        System.err.println("DoubleMatrix.combineVertically(e, f, e) => " + iae);
-      }
+      Test.assertThrows(
+          IllegalArgumentException.class,
+          "DoubleMatrix.combineHorizontally(f, g)",
+          () -> DoubleMatrix.combineHorizontally(f, g));
+      Test.assertThrows(
+          IllegalArgumentException.class,
+          "DoubleMatrix.combineVertically(e, f, e)",
+          () -> DoubleMatrix.combineVertically(e, f, e));
 
       assert d.isEqual(DoubleMatrix.combineHorizontally(a, b, c));
       assert d.trs().isEqual(DoubleMatrix.combineVertically(a.trs(), b.trs(), c.trs()));
@@ -803,13 +800,11 @@ public class TestDoubleMatrix {
     } // end of block
 
     { // ファイルの形式に誤りがあった場合の例外を確認
-      try {
-        writeToFile("tmpe1.dat", "2 3 4\n6 u 9\n");
-        DoubleMatrix a = DoubleMatrix.readFromFile("tmpe1.dat");
-      } catch (IOException ioe) {
-        System.err.print("DoubleMatrix.readFromFile(\"tmpe1.dat\") => ");
-        ioe.printStackTrace();
-      }
+      writeToFile("tmpe1.dat", "2 3 4\n6 u 9\n");
+      Test.assertThrows(
+          IOException.class,
+          "DoubleMatrix.readFromFile(\"tmpe1.dat\")",
+          () -> DoubleMatrix.readFromFile("tmpe1.dat"));
     } // end of block
 
     { // コピーコンストラクタの動作確認
