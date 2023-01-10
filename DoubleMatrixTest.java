@@ -189,19 +189,13 @@ public class DoubleMatrixTest {
       assert !e.isEqual(a);
     } // end of block
 
-    if (false) { // toString() の呼び出し
+    { // toString() の動作確認
       DoubleMatrix a = new DoubleMatrix(new double[][] {{0, 1, 2}});
-      System.out.println(a);
-      System.out.println(a.toString(","));
-
       DoubleMatrix b =
           new DoubleMatrix(
               new double[][] {
                 {0}, {1}, {2},
               });
-      System.out.println(b);
-      System.out.println(b.toString(";"));
-
       DoubleMatrix c =
           new DoubleMatrix(
               new double[][] {
@@ -209,8 +203,14 @@ public class DoubleMatrixTest {
                 {1, 4, 7, 10},
                 {2, 5, 8, 11},
               });
-      System.out.print(c);
-      System.out.print(c.toString(" | "));
+
+      assert a.toString().equals("0.0 1.0 2.0");
+      assert a.toString(",").equals("0.0,1.0,2.0");
+      assert b.toString().equals("0.0\n1.0\n2.0");
+      assert b.toString(";").equals("0.0\n1.0\n2.0");
+      assert c.toString().equals("0.0 3.0 6.0 9.0\n1.0 4.0 7.0 10.0\n2.0 5.0 8.0 11.0");
+      assert c.toString(" | ")
+          .equals("0.0 | 3.0 | 6.0 | 9.0\n1.0 | 4.0 | 7.0 | 10.0\n2.0 | 5.0 | 8.0 | 11.0");
     } // end of block
 
     { // add() の動作確認
