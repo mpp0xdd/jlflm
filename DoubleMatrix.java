@@ -104,7 +104,7 @@ public class DoubleMatrix {
       }
     } catch (NumberFormatException nfe) {
       IOException ioe =
-          new IOException(String.format("%s:%d: %s\n", filename, rows.size() + 1, line));
+          new IOException(String.format("%s:%d: %s", filename, rows.size() + 1, line));
       ioe.initCause(nfe);
       throw ioe;
     } catch (IOException ioe) {
@@ -159,6 +159,9 @@ public class DoubleMatrix {
             errMsgBuf.append("vals[" + k + "]\n");
           }
           errMsgBuf.append(vals[k]);
+          if (k < vals.length - 1) {
+            errMsgBuf.append("\n");
+          }
         }
         throw (new IllegalArgumentException(errMsgBuf.toString()));
       }
@@ -211,6 +214,9 @@ public class DoubleMatrix {
             errMsgBuf.append("vals[" + k + "]\n");
           }
           errMsgBuf.append(vals[k]);
+          if (k < vals.length - 1) {
+            errMsgBuf.append("\n");
+          }
         }
         throw (new IllegalArgumentException(errMsgBuf.toString()));
       }
@@ -338,8 +344,9 @@ public class DoubleMatrix {
           for (i = 0; i < matrix.length; i++) {
             errMsgBuf.append(Arrays.toString(matrix[i]));
             if (i == loc) {
-              errMsgBuf.append(" <--\n");
-            } else {
+              errMsgBuf.append(" <--");
+            }
+            if (i < matrix.length - 1) {
               errMsgBuf.append("\n");
             }
           }
@@ -482,7 +489,9 @@ public class DoubleMatrix {
         result.append(DEFAULT_DELIM);
         result.append(this.matrix[i][j]);
       }
-      result.append("\n");
+      if (i < this.rows - 1) {
+        result.append("\n");
+      }
     }
 
     return result.toString();
