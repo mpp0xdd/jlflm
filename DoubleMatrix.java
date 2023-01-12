@@ -286,32 +286,6 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
-  /**
-   * 行列が対称かどうか判定して，結果の真偽値を返します。
-   *
-   * @param val 判定対象の行列
-   * @return 対称行列なら，true
-   */
-  public static boolean isSymmetricMatrix(DoubleMatrix val) {
-    if (val.rows != val.columns) {
-      return false;
-    }
-
-    for (int i = 0; i < val.rows; i++) {
-      for (int j = 0; j < val.columns; j++) {
-        if (i == j) {
-          continue;
-        }
-
-        if (val.get(i, j) != val.get(j, i)) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
   /** 行列を表すdouble型2次元配列です。 */
   private final double[][] matrix;
 
@@ -450,6 +424,31 @@ public class DoubleMatrix {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
         if (this.get(i, j) != val.get(i, j)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * この行列が対称かどうか判定して，結果の真偽値を返します。
+   *
+   * @return 対称行列なら，true
+   */
+  public boolean isSymmetric() {
+    if (this.rows != this.columns) {
+      return false;
+    }
+
+    for (int i = 0; i < this.rows; i++) {
+      for (int j = 0; j < this.columns; j++) {
+        if (i == j) {
+          continue;
+        }
+
+        if (this.get(i, j) != this.get(j, i)) {
           return false;
         }
       }

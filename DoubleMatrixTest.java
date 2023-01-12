@@ -189,6 +189,21 @@ public class DoubleMatrixTest {
       assert !e.isEqual(a);
     } // end of block
 
+    { // isSymmetric() の動作確認
+      DoubleMatrix a =
+          new DoubleMatrix(
+              new double[][] {
+                {1, 7, 3},
+                {7, 4, -5},
+                {3, -5, 6},
+              });
+
+      assert a.isSymmetric();
+
+      a.set(0, 1, 1);
+      assert !a.isSymmetric();
+    } // end of block
+
     { // toString() の動作確認
       DoubleMatrix a = new DoubleMatrix(new double[][] {{0, 1, 2}});
       DoubleMatrix b =
@@ -488,21 +503,6 @@ public class DoubleMatrixTest {
 
       assert c.trs().isEqual(d);
       assert e.trs().isEqual(e);
-    } // end of block
-
-    { // isSymmetricMatrix() の動作確認
-      DoubleMatrix a =
-          new DoubleMatrix(
-              new double[][] {
-                {1, 7, 3},
-                {7, 4, -5},
-                {3, -5, 6},
-              });
-
-      assert DoubleMatrix.isSymmetricMatrix(a);
-
-      a.set(0, 1, 1);
-      assert !DoubleMatrix.isSymmetricMatrix(a);
     } // end of block
 
     { // 行列同士の型の比較の動作確認
