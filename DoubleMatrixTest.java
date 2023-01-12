@@ -826,4 +826,4 @@ public class DoubleMatrixTest {
     System.err.println();
     System.err.println("テスト完了");
   } // end of main()
-} // end of class TestDoubleMatrix
+} // end of class DoubleMatrixTest
