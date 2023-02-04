@@ -272,12 +272,12 @@ public class DoubleMatrixTest {
       Test.assertThrows(NullPointerException.class, "a.add(null)", () -> a.add(null));
 
       // 行数が異なる場合
-      assert a.add(b) == null;
-      assert b.add(a) == null;
+      Test.assertThrows(ArithmeticException.class, "a.add(b)", () -> a.add(b));
+      Test.assertThrows(ArithmeticException.class, "b.add(a)", () -> b.add(a));
 
       // 列数が異なる場合
-      assert b.add(c) == null;
-      assert c.add(b) == null;
+      Test.assertThrows(ArithmeticException.class, "b.add(c)", () -> b.add(c));
+      Test.assertThrows(ArithmeticException.class, "c.add(b)", () -> c.add(b));
 
       // 加算結果が正しいかどうか
       assert d.add(e).isEqual(f);
@@ -309,7 +309,12 @@ public class DoubleMatrixTest {
                 {1, 4, 7, 10},
               });
 
+      DoubleMatrix d = new DoubleMatrix(new double[][] {{1, 2}});
+
       assert a.sub(b).isEqual(c);
+
+      Test.assertThrows(ArithmeticException.class, "a.sub(d)", () -> a.sub(d));
+      Test.assertThrows(ArithmeticException.class, "d.sub(a)", () -> d.sub(a));
     } // end of block
 
     { // 行列の定数倍の動作確認
@@ -394,6 +399,8 @@ public class DoubleMatrixTest {
 
       assert b.mul(a).isEqual(f);
       assert c.mul(d).isEqual(g);
+
+      Test.assertThrows(ArithmeticException.class, "d.mul(e)", () -> d.mul(e));
     } // end of block
 
     { // createDiagonalMatrix() の動作確認
@@ -624,6 +631,8 @@ public class DoubleMatrixTest {
                 {6, 7, 8},
               });
 
+      DoubleMatrix e = new DoubleMatrix(new double[][] {{1, 2, 3}});
+
       assert !a.isEqual(d);
       a.addeq(c);
       assert a.isEqual(d);
@@ -631,6 +640,11 @@ public class DoubleMatrixTest {
       a.subeq(c);
       assert !a.isEqual(d);
       assert a.isEqual(b);
+
+      Test.assertThrows(ArithmeticException.class, "a.addeq(e)", () -> a.addeq(e));
+      Test.assertThrows(ArithmeticException.class, "e.addeq(a)", () -> e.addeq(a));
+      Test.assertThrows(ArithmeticException.class, "a.subeq(e)", () -> a.subeq(e));
+      Test.assertThrows(ArithmeticException.class, "e.subeq(a)", () -> e.subeq(a));
     } // end of block
 
     { // 自分自身の定数倍の動作確認

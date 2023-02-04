@@ -601,14 +601,18 @@ public class DoubleMatrix {
 
   /**
    * this + valを計算し，結果の行列を返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
    *
    * @param val この行列に加算する行列。
    * @return this + val
+   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
    */
   public DoubleMatrix add(DoubleMatrix val) {
     if (!this.isTypeEqual(val)) {
-      return null;
+      throw (new ArithmeticException(
+          String.format(
+              "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
+              this.rows, this.columns, val.rows, val.columns)));
     }
 
     double[][] result = new double[this.rows][this.columns];
@@ -623,14 +627,18 @@ public class DoubleMatrix {
 
   /**
    * this += valを計算し，thisを返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
    *
    * @param val この行列に加算する行列。
    * @return this
+   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
    */
   public DoubleMatrix addeq(DoubleMatrix val) {
     if (!this.isTypeEqual(val)) {
-      return null;
+      throw (new ArithmeticException(
+          String.format(
+              "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
+              this.rows, this.columns, val.rows, val.columns)));
     }
 
     for (int i = 0; i < this.rows; i++) {
@@ -644,14 +652,18 @@ public class DoubleMatrix {
 
   /**
    * this - valを計算し，結果の行列を返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
    *
    * @param val この行列から減算する行列。
    * @return this - val
+   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
    */
   public DoubleMatrix sub(DoubleMatrix val) {
     if (!this.isTypeEqual(val)) {
-      return null;
+      throw (new ArithmeticException(
+          String.format(
+              "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
+              this.rows, this.columns, val.rows, val.columns)));
     }
 
     double[][] result = new double[this.rows][this.columns];
@@ -666,14 +678,18 @@ public class DoubleMatrix {
 
   /**
    * this -= valを計算し，thisを返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，nullを返します。
+   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
    *
    * @param val この行列から減算する行列。
    * @return this
+   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
    */
   public DoubleMatrix subeq(DoubleMatrix val) {
     if (!this.isTypeEqual(val)) {
-      return null;
+      throw (new ArithmeticException(
+          String.format(
+              "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
+              this.rows, this.columns, val.rows, val.columns)));
     }
 
     for (int i = 0; i < this.rows; i++) {
@@ -704,14 +720,16 @@ public class DoubleMatrix {
 
   /**
    * this * valを計算し，結果の行列を返します。<br>
-   * ただし，thisの列数とvalの行数が異なり，計算を実行できない場合は，nullを返します。
+   * ただし，thisの列数とvalの行数が異なり，計算を実行できない場合は，例外をスローします。
    *
    * @param val この行列に乗算する行列。
    * @return this * val
+   * @throws ArithmeticException thisの列数とvalの行数が異なり，計算を実行できない場合
    */
   public DoubleMatrix mul(DoubleMatrix val) {
     if (this.columns != val.rows) {
-      return null;
+      throw (new ArithmeticException(
+          String.format("列数と行数が異なるため，計算できません: %d != %d", this.columns, val.rows)));
     }
 
     double[][] result = new double[this.rows][val.columns];
