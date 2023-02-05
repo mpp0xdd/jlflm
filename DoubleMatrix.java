@@ -518,8 +518,11 @@ public class DoubleMatrix {
    * @return この行列の文字列表現
    */
   public String toString(String delim) {
-    String result = this.toString();
+    if (delim.isEmpty() || delim.contains(".") || delim.matches(".*\\d.*")) {
+      throw (new IllegalArgumentException("区切り文字が不正です: " + delim));
+    }
 
+    String result = this.toString();
     if (!DEFAULT_DELIM.equals(delim)) {
       result = result.replace(DEFAULT_DELIM, delim);
     }

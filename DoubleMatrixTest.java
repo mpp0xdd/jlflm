@@ -226,6 +226,22 @@ public class DoubleMatrixTest {
       assert c.toString().equals("0.0 3.0 6.0 9.0\n1.0 4.0 7.0 10.0\n2.0 5.0 8.0 11.0");
       assert c.toString(" | ")
           .equals("0.0 | 3.0 | 6.0 | 9.0\n1.0 | 4.0 | 7.0 | 10.0\n2.0 | 5.0 | 8.0 | 11.0");
+
+      Test.assertThrows(IllegalArgumentException.class, "a.toString(\"\")", () -> a.toString(""));
+      Test.assertThrows(IllegalArgumentException.class, "a.toString(\".\")", () -> a.toString("."));
+      Test.assertThrows(
+          IllegalArgumentException.class, "a.toString(\",.\")", () -> a.toString(",."));
+      Test.assertThrows(
+          IllegalArgumentException.class, "a.toString(\".,\")", () -> a.toString(".,"));
+      Test.assertThrows(
+          IllegalArgumentException.class, "a.toString(\",.,\")", () -> a.toString(",.,"));
+      Test.assertThrows(IllegalArgumentException.class, "a.toString(\"6\")", () -> a.toString("6"));
+      Test.assertThrows(
+          IllegalArgumentException.class, "a.toString(\",6\")", () -> a.toString(",6"));
+      Test.assertThrows(
+          IllegalArgumentException.class, "a.toString(\"6,\")", () -> a.toString("6,"));
+      Test.assertThrows(
+          IllegalArgumentException.class, "a.toString(\",6,\")", () -> a.toString(",6,"));
     } // end of block
 
     { // add() の動作確認
