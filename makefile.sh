@@ -3,6 +3,8 @@ CFLAGS="-J-Dfile.encoding=UTF-8"
 JFLAGS="-Dfile.encoding=UTF-8"
 CLASSES="classes"
 TMP="tmp"
+DOC="doc"
+DOCTGT="DoubleMatrix.java"
 TEST="DoubleMatrixTest"
 FORMATTER="../Lib/google-java-format-1.15.0-all-deps.jar"
 
@@ -15,6 +17,7 @@ usage () {
       -c      remove all class and temporary files
       -m      run compile
       -j      create jar
+      -d      create doc
       -t      run test
 EOF
   exit
@@ -25,8 +28,8 @@ format () {
 }
 
 clean () {
-  rm -rf "$CLASSES" "$TMP"
-  mkdir "$CLASSES" "$TMP"
+  rm -rf "$CLASSES" "$TMP" "$DOC"
+  mkdir "$CLASSES" "$TMP" "$DOC"
 }
 
 make () {
@@ -38,6 +41,10 @@ makejar () {
   jar "$CFLAGS" cvf 'jglib.jar' '*.java' -C "$CLASSES" .
 }
 
+makedoc () {
+  javadoc "$CFLAGS" -d doc "$DOCTGT"
+}
+
 test () {
   java "$JFLAGS" -cp "$CLASSES" -ea "$TEST"
 }
@@ -47,13 +54,14 @@ if [ $# -eq 0 ]; then
   usage
 fi
 
-while getopts 'hfcmjt' opt; do
+while getopts 'hfcmjdt' opt; do
   case "$opt" in
     h) usage ;;
     f) format ;;
     c) clean ;;
     m) make ;;
     j) clean && makejar ;;
+    d) clean && makedoc ;;
     t) format && make && test ;;
   esac
 done
