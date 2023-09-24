@@ -691,9 +691,9 @@ public class DoubleMatrixTest {
               });
 
       try {
-        DoubleMatrix.writeToFile(a, "tmp1.dat");
-        DoubleMatrix.writeToFile(b, "tmp2.dat");
-        DoubleMatrix.writeToFile(c, "tmp3.dat", ",");
+        DoubleMatrix.writeToFile(a, "tmp/tmp1.dat");
+        DoubleMatrix.writeToFile(b, "tmp/tmp2.dat");
+        DoubleMatrix.writeToFile(c, "tmp/tmp3.dat", ",");
       } catch (IOException ioe) {
         ioe.printStackTrace();
         System.exit(1);
@@ -702,9 +702,9 @@ public class DoubleMatrixTest {
       DoubleMatrix d, e, f;
       d = e = f = null;
       try {
-        d = DoubleMatrix.readFromFile("tmp1.dat");
-        e = DoubleMatrix.readFromFile("tmp2.dat");
-        f = DoubleMatrix.readFromFile("tmp3.dat", ",");
+        d = DoubleMatrix.readFromFile("tmp/tmp1.dat");
+        e = DoubleMatrix.readFromFile("tmp/tmp2.dat");
+        f = DoubleMatrix.readFromFile("tmp/tmp3.dat", ",");
       } catch (IOException ioe) {
         ioe.printStackTrace();
         System.exit(1);
@@ -830,11 +830,11 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // ファイルの形式に誤りがあった場合の例外を確認
-      writeToFile("tmpe1.dat", "2 3 4\n6 u 9\n");
+      writeToFile("tmp/tmpe1.dat", "2 3 4\n6 u 9\n");
       Test.assertThrows(
           IOException.class,
           "DoubleMatrix.readFromFile(\"tmpe1.dat\")",
-          () -> DoubleMatrix.readFromFile("tmpe1.dat"));
+          () -> DoubleMatrix.readFromFile("tmp/tmpe1.dat"));
     } // end of block
 
     { // コピーコンストラクタの動作確認
