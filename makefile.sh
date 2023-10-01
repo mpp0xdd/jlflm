@@ -42,7 +42,7 @@ makejar () {
 }
 
 makedoc () {
-  javadoc "$CFLAGS" -d doc "$DOCTGT"
+  javadoc "$CFLAGS" -d "$DOC" "$DOCTGT"
 }
 
 test () {
