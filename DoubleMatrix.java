@@ -688,7 +688,7 @@ public class DoubleMatrix {
    * @return this - val
    * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
    */
-  public DoubleMatrix sub(DoubleMatrix val) {
+  public DoubleMatrix minus(DoubleMatrix val) {
     if (!this.isTypeEqual(val)) {
       throw (new ArithmeticException(
           String.format(

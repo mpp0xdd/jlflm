@@ -333,10 +333,10 @@ public class DoubleMatrixTest {
 
       DoubleMatrix d = new DoubleMatrix(new double[][] {{1, 2}});
 
-      assert a.sub(b).isEqual(c);
+      assert a.minus(b).isEqual(c);
 
-      Test.assertThrows(ArithmeticException.class, "a.sub(d)", () -> a.sub(d));
-      Test.assertThrows(ArithmeticException.class, "d.sub(a)", () -> d.sub(a));
+      Test.assertThrows(ArithmeticException.class, "a.minus(d)", () -> a.minus(d));
+      Test.assertThrows(ArithmeticException.class, "d.minus(a)", () -> d.minus(a));
     } // end of block
 
     { // 行列の定数倍の動作確認
