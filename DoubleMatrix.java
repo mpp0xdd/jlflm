@@ -663,7 +663,7 @@ public class DoubleMatrix {
    * @return this
    * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
    */
-  public DoubleMatrix addeq(DoubleMatrix val) {
+  public DoubleMatrix add(DoubleMatrix val) {
     if (!this.isTypeEqual(val)) {
       throw (new ArithmeticException(
           String.format(

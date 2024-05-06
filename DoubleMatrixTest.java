@@ -656,15 +656,15 @@ public class DoubleMatrixTest {
       DoubleMatrix e = new DoubleMatrix(new double[][] {{1, 2, 3}});
 
       assert !a.isEqual(d);
-      a.addeq(c);
+      a.add(c);
       assert a.isEqual(d);
 
       a.subeq(c);
       assert !a.isEqual(d);
       assert a.isEqual(b);
 
-      Test.assertThrows(ArithmeticException.class, "a.addeq(e)", () -> a.addeq(e));
-      Test.assertThrows(ArithmeticException.class, "e.addeq(a)", () -> e.addeq(a));
+      Test.assertThrows(ArithmeticException.class, "a.add(e)", () -> a.add(e));
+      Test.assertThrows(ArithmeticException.class, "e.add(a)", () -> e.add(a));
       Test.assertThrows(ArithmeticException.class, "a.subeq(e)", () -> a.subeq(e));
       Test.assertThrows(ArithmeticException.class, "e.subeq(a)", () -> e.subeq(a));
     } // end of block
