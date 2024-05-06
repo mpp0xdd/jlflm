@@ -737,7 +737,7 @@ public class DoubleMatrix {
    * @param k この行列に乗算する値。
    * @return this * k
    */
-  public DoubleMatrix mul(double k) {
+  public DoubleMatrix times(double k) {
     double[][] result = new double[this.rows][this.columns];
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
@@ -756,7 +756,7 @@ public class DoubleMatrix {
    * @return this * val
    * @throws ArithmeticException thisの列数とvalの行数が異なり，計算を実行できない場合
    */
-  public DoubleMatrix mul(DoubleMatrix val) {
+  public DoubleMatrix times(DoubleMatrix val) {
     if (this.columns != val.rows) {
       throw (new ArithmeticException(
           String.format("列数と行数が異なるため，計算できません: %d != %d", this.columns, val.rows)));

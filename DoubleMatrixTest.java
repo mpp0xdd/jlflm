@@ -364,17 +364,17 @@ public class DoubleMatrixTest {
                 {0, 0, 0},
               });
 
-      assert a.mul(2).isEqual(b);
-      assert b.mul(0.5).isEqual(a);
+      assert a.times(2).isEqual(b);
+      assert b.times(0.5).isEqual(a);
 
       // 0A = O
-      assert a.mul(0).isEqual(z);
+      assert a.times(0).isEqual(z);
 
       // 1A = A
-      assert a.mul(1).isEqual(a);
+      assert a.times(1).isEqual(a);
 
       // kO = O
-      assert z.mul(12).isEqual(z);
+      assert z.times(12).isEqual(z);
     } // end of block
 
     { // 行列同士の掛け算の動作確認
@@ -416,13 +416,13 @@ public class DoubleMatrixTest {
                 {5, 5, 5, 5, 5},
               });
 
-      assert a.mul(b).isEqual(e);
-      assert d.mul(c).isEqual(e);
+      assert a.times(b).isEqual(e);
+      assert d.times(c).isEqual(e);
 
-      assert b.mul(a).isEqual(f);
-      assert c.mul(d).isEqual(g);
+      assert b.times(a).isEqual(f);
+      assert c.times(d).isEqual(g);
 
-      Test.assertThrows(ArithmeticException.class, "d.mul(e)", () -> d.mul(e));
+      Test.assertThrows(ArithmeticException.class, "d.times(e)", () -> d.times(e));
     } // end of block
 
     { // createDiagonalMatrix() の動作確認
@@ -479,8 +479,8 @@ public class DoubleMatrixTest {
               });
 
       assert a.isEqual(b);
-      assert c.mul(d).isEqual(e);
-      assert f.mul(g).isEqual(h);
+      assert c.times(d).isEqual(e);
+      assert f.times(g).isEqual(h);
       assert z.isEqual(DoubleMatrix.createDiagonalMatrix(new double[] {0, 0, 0}));
       assert z.isEqual(DoubleMatrix.createDiagonalMatrix(0, 0, 0));
     } // end of block
@@ -621,12 +621,12 @@ public class DoubleMatrixTest {
       assert a.isEqual(b);
       assert b.isEqual(a);
       a.swapRows(0, 3);
-      assert a.isEqual(c.mul(b));
+      assert a.isEqual(c.times(b));
 
       assert d.isEqual(e);
       assert e.isEqual(d);
       d.swapColumns(0, 2);
-      assert d.isEqual(e.mul(f));
+      assert d.isEqual(e.times(f));
     } // end of block
 
     { // 自分自身に対する加算と減算の動作確認
