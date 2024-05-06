@@ -43,15 +43,15 @@ public class DoubleMatrix {
    * DoubleMatrix.writeToFile(a, "mat.csv", ",");
    * }</pre>
    *
-   * @param val 行列
+   * @param matrix 行列
    * @param filename ファイル名
    * @param delim 各要素間の区切り文字
    * @throws IOException 入出力エラーが発生した場合
    */
-  public static void writeToFile(DoubleMatrix val, String filename, String delim)
+  public static void writeToFile(DoubleMatrix matrix, String filename, String delim)
       throws IOException {
     try (BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
-      String buf = val.toString(delim);
+      String buf = matrix.toString(delim);
       file.write(buf, 0, buf.length());
       file.flush();
     } catch (IOException ioe) {
@@ -62,13 +62,13 @@ public class DoubleMatrix {
   /**
    * 行列の文字列表現(toString()の実行結果)をファイルに書き込みます。
    *
-   * @param val 行列
+   * @param matrix 行列
    * @param filename ファイル名
    * @throws IOException 入出力エラーが発生した場合
    * @see #toString()
    */
-  public static void writeToFile(DoubleMatrix val, String filename) throws IOException {
-    writeToFile(val, filename, DEFAULT_DELIM);
+  public static void writeToFile(DoubleMatrix matrix, String filename) throws IOException {
+    writeToFile(matrix, filename, DEFAULT_DELIM);
   }
 
   /**
@@ -139,45 +139,45 @@ public class DoubleMatrix {
    * DoubleMatrix A = DoubleMatrix.combineHorizontally(x, y, z);
    * }</pre>
    *
-   * @param vals 任意の個数の行列
+   * @param matrices 任意の個数の行列
    * @return 連結結果の行列
    * @throws IllegalArgumentException 行列の連結が出来ない(行数が異なっている)場合
    * @see #createColumnVector(double...)
    */
-  public static DoubleMatrix combineHorizontally(DoubleMatrix... vals) {
-    final int rows = vals[0].rows;
-    int columns = vals[0].columns;
+  public static DoubleMatrix combineHorizontally(DoubleMatrix... matrices) {
+    final int rows = matrices[0].rows;
+    int columns = matrices[0].columns;
 
-    for (int k = 1; k < vals.length; k++) {
-      if (vals[k].rows != rows) {
+    for (int k = 1; k < matrices.length; k++) {
+      if (matrices[k].rows != rows) {
         StringBuilder errMsgBuf = new StringBuilder("行列の行数が揃っていません。水平方向への結合に失敗しました\n");
         final int loc = k;
-        for (k = 0; k < vals.length; k++) {
+        for (k = 0; k < matrices.length; k++) {
           if (k == loc) {
-            errMsgBuf.append("vals[" + k + "] <--\n");
+            errMsgBuf.append("matrices[" + k + "] <--\n");
           } else {
-            errMsgBuf.append("vals[" + k + "]\n");
+            errMsgBuf.append("matrices[" + k + "]\n");
           }
-          errMsgBuf.append(vals[k]);
-          if (k < vals.length - 1) {
+          errMsgBuf.append(matrices[k]);
+          if (k < matrices.length - 1) {
             errMsgBuf.append("\n");
           }
         }
         throw (new IllegalArgumentException(errMsgBuf.toString()));
       }
 
-      columns += vals[k].columns;
+      columns += matrices[k].columns;
     }
 
     double[][] result = new double[rows][columns];
     int pos = 0;
-    for (int k = 0; k < vals.length; k++) {
+    for (int k = 0; k < matrices.length; k++) {
       for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < vals[k].columns; j++) {
-          result[i][j + pos] = vals[k].get(i, j);
+        for (int j = 0; j < matrices[k].columns; j++) {
+          result[i][j + pos] = matrices[k].get(i, j);
         }
       }
-      pos += vals[k].columns;
+      pos += matrices[k].columns;
     }
 
     return (new DoubleMatrix(result, false, false));
@@ -194,45 +194,45 @@ public class DoubleMatrix {
    * DoubleMatrix A = DoubleMatrix.combineVertically(x, y, z);
    * }</pre>
    *
-   * @param vals 任意の個数の行列
+   * @param matrices 任意の個数の行列
    * @return 連結結果の行列
    * @throws IllegalArgumentException 行列の連結が出来ない(列数が異なっている)場合
    * @see #createRowVector(double...)
    */
-  public static DoubleMatrix combineVertically(DoubleMatrix... vals) {
-    int rows = vals[0].rows;
-    final int columns = vals[0].columns;
+  public static DoubleMatrix combineVertically(DoubleMatrix... matrices) {
+    int rows = matrices[0].rows;
+    final int columns = matrices[0].columns;
 
-    for (int k = 1; k < vals.length; k++) {
-      if (vals[k].columns != columns) {
+    for (int k = 1; k < matrices.length; k++) {
+      if (matrices[k].columns != columns) {
         StringBuilder errMsgBuf = new StringBuilder("行列の列数が揃っていません。垂直方向への結合に失敗しました\n");
         final int loc = k;
-        for (k = 0; k < vals.length; k++) {
+        for (k = 0; k < matrices.length; k++) {
           if (k == loc) {
-            errMsgBuf.append("vals[" + k + "] <--\n");
+            errMsgBuf.append("matrices[" + k + "] <--\n");
           } else {
-            errMsgBuf.append("vals[" + k + "]\n");
+            errMsgBuf.append("matrices[" + k + "]\n");
           }
-          errMsgBuf.append(vals[k]);
-          if (k < vals.length - 1) {
+          errMsgBuf.append(matrices[k]);
+          if (k < matrices.length - 1) {
             errMsgBuf.append("\n");
           }
         }
         throw (new IllegalArgumentException(errMsgBuf.toString()));
       }
 
-      rows += vals[k].rows;
+      rows += matrices[k].rows;
     }
 
     double[][] result = new double[rows][columns];
     int pos = 0;
-    for (int k = 0; k < vals.length; k++) {
-      for (int i = 0; i < vals[k].rows; i++) {
+    for (int k = 0; k < matrices.length; k++) {
+      for (int i = 0; i < matrices[k].rows; i++) {
         for (int j = 0; j < columns; j++) {
-          result[i + pos][j] = vals[k].get(i, j);
+          result[i + pos][j] = matrices[k].get(i, j);
         }
       }
-      pos += vals[k].rows;
+      pos += matrices[k].rows;
     }
 
     return (new DoubleMatrix(result, false, false));
@@ -311,11 +311,11 @@ public class DoubleMatrix {
   /**
    * 行列のコピーを生成します。
    *
-   * @param val コピー元の行列
+   * @param matrix コピー元の行列
    * @return コピーされた行列
    */
-  public static DoubleMatrix from(DoubleMatrix val) {
-    return (new DoubleMatrix(val));
+  public static DoubleMatrix from(DoubleMatrix matrix) {
+    return (new DoubleMatrix(matrix));
   }
 
   /**
@@ -435,10 +435,10 @@ public class DoubleMatrix {
   /**
    * コピーコンストラクタです。
    *
-   * @param val コピー元の行列
+   * @param matrix コピー元の行列
    */
-  private DoubleMatrix(DoubleMatrix val) {
-    this(val.matrix, false, true);
+  private DoubleMatrix(DoubleMatrix matrix) {
+    this(matrix.matrix, false, true);
   }
 
   /**
@@ -469,33 +469,33 @@ public class DoubleMatrix {
   }
 
   /**
-   * thisの型(rows * columns)とvalの型が等しいなら真を返します。
+   * thisの型(rows * columns)とthatの型が等しいなら真を返します。
    *
-   * @param val 任意の行列
+   * @param that 任意の行列
    * @return 型が等しいならtrue
    */
-  public boolean isTypeEqual(DoubleMatrix val) {
-    return (this.rows == val.rows && this.columns == val.columns);
+  public boolean isTypeEqual(DoubleMatrix that) {
+    return (this.rows == that.rows && this.columns == that.columns);
   }
 
   /**
-   * thisとvalが等価な行列なら真を返します。
+   * thisとthatが等価な行列なら真を返します。
    *
-   * @param val 任意の行列
-   * @return this = valならtrue
+   * @param that 任意の行列
+   * @return this = thatならtrue
    */
-  public boolean isEqual(DoubleMatrix val) {
-    if (this == val) {
+  public boolean isEqual(DoubleMatrix that) {
+    if (this == that) {
       return true;
     }
 
-    if (!this.isTypeEqual(val)) {
+    if (!this.isTypeEqual(that)) {
       return false;
     }
 
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        if (this.get(i, j) != val.get(i, j)) {
+        if (this.get(i, j) != that.get(i, j)) {
           return false;
         }
       }
@@ -675,25 +675,25 @@ public class DoubleMatrix {
   }
 
   /**
-   * this + valを計算し，結果の行列を返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
+   * this + thatを計算し，結果の行列を返します。<br>
+   * ただし，thisとthatの型が異なり，計算を実行できない場合は，例外をスローします。
    *
-   * @param val この行列に加算する行列。
-   * @return this + val
-   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
+   * @param that この行列に加算する行列。
+   * @return this + that
+   * @throws ArithmeticException thisとthatの型が異なり，計算を実行できない場合
    */
-  public DoubleMatrix plus(DoubleMatrix val) {
-    if (!this.isTypeEqual(val)) {
+  public DoubleMatrix plus(DoubleMatrix that) {
+    if (!this.isTypeEqual(that)) {
       throw (new ArithmeticException(
           String.format(
               "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
-              this.rows, this.columns, val.rows, val.columns)));
+              this.rows, this.columns, that.rows, that.columns)));
     }
 
     double[][] result = new double[this.rows][this.columns];
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        result[i][j] = this.get(i, j) + val.get(i, j);
+        result[i][j] = this.get(i, j) + that.get(i, j);
       }
     }
 
@@ -701,24 +701,24 @@ public class DoubleMatrix {
   }
 
   /**
-   * this += valを計算し，thisを返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
+   * this += thatを計算し，thisを返します。<br>
+   * ただし，thisとthatの型が異なり，計算を実行できない場合は，例外をスローします。
    *
-   * @param val この行列に加算する行列。
+   * @param that この行列に加算する行列。
    * @return this
-   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
+   * @throws ArithmeticException thisとthatの型が異なり，計算を実行できない場合
    */
-  public DoubleMatrix add(DoubleMatrix val) {
-    if (!this.isTypeEqual(val)) {
+  public DoubleMatrix add(DoubleMatrix that) {
+    if (!this.isTypeEqual(that)) {
       throw (new ArithmeticException(
           String.format(
               "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
-              this.rows, this.columns, val.rows, val.columns)));
+              this.rows, this.columns, that.rows, that.columns)));
     }
 
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        this.matrix[i][j] += val.get(i, j);
+        this.matrix[i][j] += that.get(i, j);
       }
     }
 
@@ -726,25 +726,25 @@ public class DoubleMatrix {
   }
 
   /**
-   * this - valを計算し，結果の行列を返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
+   * this - thatを計算し，結果の行列を返します。<br>
+   * ただし，thisとthatの型が異なり，計算を実行できない場合は，例外をスローします。
    *
-   * @param val この行列から減算する行列。
-   * @return this - val
-   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
+   * @param that この行列から減算する行列。
+   * @return this - that
+   * @throws ArithmeticException thisとthatの型が異なり，計算を実行できない場合
    */
-  public DoubleMatrix minus(DoubleMatrix val) {
-    if (!this.isTypeEqual(val)) {
+  public DoubleMatrix minus(DoubleMatrix that) {
+    if (!this.isTypeEqual(that)) {
       throw (new ArithmeticException(
           String.format(
               "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
-              this.rows, this.columns, val.rows, val.columns)));
+              this.rows, this.columns, that.rows, that.columns)));
     }
 
     double[][] result = new double[this.rows][this.columns];
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        result[i][j] = this.get(i, j) - val.get(i, j);
+        result[i][j] = this.get(i, j) - that.get(i, j);
       }
     }
 
@@ -752,24 +752,24 @@ public class DoubleMatrix {
   }
 
   /**
-   * this -= valを計算し，thisを返します。<br>
-   * ただし，thisとvalの型が異なり，計算を実行できない場合は，例外をスローします。
+   * this -= thatを計算し，thisを返します。<br>
+   * ただし，thisとthatの型が異なり，計算を実行できない場合は，例外をスローします。
    *
-   * @param val この行列から減算する行列。
+   * @param that この行列から減算する行列。
    * @return this
-   * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
+   * @throws ArithmeticException thisとthatの型が異なり，計算を実行できない場合
    */
-  public DoubleMatrix sub(DoubleMatrix val) {
-    if (!this.isTypeEqual(val)) {
+  public DoubleMatrix sub(DoubleMatrix that) {
+    if (!this.isTypeEqual(that)) {
       throw (new ArithmeticException(
           String.format(
               "行列の型が異なるため，計算できません: (%d,%d) != (%d,%d)",
-              this.rows, this.columns, val.rows, val.columns)));
+              this.rows, this.columns, that.rows, that.columns)));
     }
 
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        this.matrix[i][j] -= val.get(i, j);
+        this.matrix[i][j] -= that.get(i, j);
       }
     }
 
@@ -794,24 +794,24 @@ public class DoubleMatrix {
   }
 
   /**
-   * this * valを計算し，結果の行列を返します。<br>
-   * ただし，thisの列数とvalの行数が異なり，計算を実行できない場合は，例外をスローします。
+   * this * thatを計算し，結果の行列を返します。<br>
+   * ただし，thisの列数とthatの行数が異なり，計算を実行できない場合は，例外をスローします。
    *
-   * @param val この行列に乗算する行列。
-   * @return this * val
-   * @throws ArithmeticException thisの列数とvalの行数が異なり，計算を実行できない場合
+   * @param that この行列に乗算する行列。
+   * @return this * that
+   * @throws ArithmeticException thisの列数とthatの行数が異なり，計算を実行できない場合
    */
-  public DoubleMatrix times(DoubleMatrix val) {
-    if (this.columns != val.rows) {
+  public DoubleMatrix times(DoubleMatrix that) {
+    if (this.columns != that.rows) {
       throw (new ArithmeticException(
-          String.format("列数と行数が異なるため，計算できません: %d != %d", this.columns, val.rows)));
+          String.format("列数と行数が異なるため，計算できません: %d != %d", this.columns, that.rows)));
     }
 
-    double[][] result = new double[this.rows][val.columns];
+    double[][] result = new double[this.rows][that.columns];
     for (int i = 0; i < this.rows; i++) {
-      for (int j = 0; j < val.columns; j++) {
-        for (int k = 0; k < this.columns; k++) { // or (k < val.rows)
-          result[i][j] += this.get(i, k) * val.get(k, j);
+      for (int j = 0; j < that.columns; j++) {
+        for (int k = 0; k < this.columns; k++) { // or (k < that.rows)
+          result[i][j] += this.get(i, k) * that.get(k, j);
         }
       }
     }
