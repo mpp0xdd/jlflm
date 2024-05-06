@@ -33,7 +33,7 @@ public class DoubleMatrix {
    * 以下は，行列をCSVファイルとして書き出す例です。
    *
    * <pre>{@code
-   * DoubleMatrix a = new DoubleMatrix(
+   * DoubleMatrix a = DoubleMatrix.from(
    *   new double[][]{
    *     {1, 2},
    *     {1, 2},
@@ -535,7 +535,7 @@ public class DoubleMatrix {
    * 実行例
    *
    * <pre>{@code
-   * DoubleMatrix a = new DoubleMatrix(3, 4);
+   * DoubleMatrix a = DoubleMatrix.createZeroMatrix(3, 4);
    * System.out.print(a);
    * }</pre>
    *
@@ -574,7 +574,7 @@ public class DoubleMatrix {
    * 実行例
    *
    * <pre>{@code
-   * DoubleMatrix a = new DoubleMatrix(3, 4);
+   * DoubleMatrix a = DoubleMatrix.createZeroMatrix(3, 4);
    * System.out.print(a.toString("|"));
    * }</pre>
    *
