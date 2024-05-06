@@ -44,6 +44,12 @@ public class DoubleMatrixTest {
 
   public static void main(String[] args) {
 
+    boolean enableassertions = false;
+    assert enableassertions = true;
+    if (!enableassertions) {
+      throw new AssertionError();
+    }
+
     { // 引数の配列が不正な場合を確認
       Test.assertThrows(
           IllegalArgumentException.class,
