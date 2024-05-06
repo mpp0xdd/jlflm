@@ -294,7 +294,7 @@ public class DoubleMatrix {
    * @return 零行列
    */
   public static DoubleMatrix createZeroMatrix(int rows, int columns) {
-    return new DoubleMatrix(rows, columns);
+    return (new DoubleMatrix(rows, columns));
   }
 
   /**
@@ -305,7 +305,7 @@ public class DoubleMatrix {
    * @throws IllegalArgumentException matrixを行列として解釈できない場合
    */
   public static DoubleMatrix from(double[][] matrix) {
-    return new DoubleMatrix(matrix);
+    return (new DoubleMatrix(matrix));
   }
 
   /**
@@ -315,7 +315,7 @@ public class DoubleMatrix {
    * @return コピーされた行列
    */
   public static DoubleMatrix from(DoubleMatrix val) {
-    return new DoubleMatrix(val);
+    return (new DoubleMatrix(val));
   }
 
   /**
@@ -328,7 +328,7 @@ public class DoubleMatrix {
    * @throws IllegalArgumentException entries.length != rows * columnsの場合
    */
   public static DoubleMatrix of(int rows, int columns, double... entries) {
-    return new DoubleMatrix(rows, columns, entries);
+    return (new DoubleMatrix(rows, columns, entries));
   }
 
   /** 行列を表すdouble型2次元配列です。 */
