@@ -291,19 +291,19 @@ public class DoubleMatrixTest {
                 {0, 12},
               });
 
-      Test.assertThrows(NullPointerException.class, "a.add(null)", () -> a.add(null));
+      Test.assertThrows(NullPointerException.class, "a.plus(null)", () -> a.plus(null));
 
       // 行数が異なる場合
-      Test.assertThrows(ArithmeticException.class, "a.add(b)", () -> a.add(b));
-      Test.assertThrows(ArithmeticException.class, "b.add(a)", () -> b.add(a));
+      Test.assertThrows(ArithmeticException.class, "a.plus(b)", () -> a.plus(b));
+      Test.assertThrows(ArithmeticException.class, "b.plus(a)", () -> b.plus(a));
 
       // 列数が異なる場合
-      Test.assertThrows(ArithmeticException.class, "b.add(c)", () -> b.add(c));
-      Test.assertThrows(ArithmeticException.class, "c.add(b)", () -> c.add(b));
+      Test.assertThrows(ArithmeticException.class, "b.plus(c)", () -> b.plus(c));
+      Test.assertThrows(ArithmeticException.class, "c.plus(b)", () -> c.plus(b));
 
       // 加算結果が正しいかどうか
-      assert d.add(e).isEqual(f);
-      assert e.add(d).isEqual(f);
+      assert d.plus(e).isEqual(f);
+      assert e.plus(d).isEqual(f);
     } // end of block
 
     { // sub() の動作確認
