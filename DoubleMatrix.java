@@ -780,7 +780,7 @@ public class DoubleMatrix {
    * @param k この行列に乗算する値。
    * @return this
    */
-  public DoubleMatrix muleq(double k) {
+  public DoubleMatrix mul(double k) {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
         this.matrix[i][j] *= k;

@@ -675,7 +675,7 @@ public class DoubleMatrixTest {
       DoubleMatrix b = new DoubleMatrix(new double[][] {{12, 24, 36}});
 
       assert !a.isEqual(b);
-      a.muleq(12);
+      a.mul(12);
       assert a.isEqual(b);
     } // end of block
 
