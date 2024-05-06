@@ -54,21 +54,21 @@ public class DoubleMatrixTest {
       Test.assertThrows(
           IllegalArgumentException.class,
           "new DoubleMatrix(new double[][] {{0}, {1, 2}})",
-          () -> new DoubleMatrix(new double[][] {{0}, {1, 2}}));
+          () -> DoubleMatrix.from(new double[][] {{0}, {1, 2}}));
       Test.assertThrows(
           IllegalArgumentException.class,
           "new DoubleMatrix(new double[][] {{0, 1}, {1, 2}, {1, 2, 3}, {4, 5}})",
-          () -> new DoubleMatrix(new double[][] {{0, 1}, {1, 2}, {1, 2, 3}, {4, 5}}));
+          () -> DoubleMatrix.from(new double[][] {{0, 1}, {1, 2}, {1, 2, 3}, {4, 5}}));
     } // end of block
 
     { // rows, columns, sizeが正しく設定されているかを確認
-      DoubleMatrix a = new DoubleMatrix(new double[][] {{0, 0, 0}});
+      DoubleMatrix a = DoubleMatrix.from(new double[][] {{0, 0, 0}});
       assert a.rows() == 1;
       assert a.columns() == 3;
       assert a.size() == 3;
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0}, {0}, {0}, {0},
               });
@@ -77,7 +77,7 @@ public class DoubleMatrixTest {
       assert b.size() == 4;
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 5},
                 {0, 2, 4},
@@ -92,7 +92,7 @@ public class DoubleMatrixTest {
 
     { // get(), set()の動作確認
       DoubleMatrix a =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 2},
                 {3, 4, 5},
@@ -114,7 +114,7 @@ public class DoubleMatrixTest {
         {3, 4, 5},
         {6, 7, 8},
       };
-      DoubleMatrix a = new DoubleMatrix(val);
+      DoubleMatrix a = DoubleMatrix.from(val);
 
       for (int i = 0; i < val.length; i++) {
         for (int j = 0; j < val[i].length; j++) {
@@ -131,7 +131,7 @@ public class DoubleMatrixTest {
 
     { // isEqual() の動作確認
       DoubleMatrix a =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 2},
                 {3, 4, 5},
@@ -140,7 +140,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 2},
                 {3, 4, 5},
@@ -148,7 +148,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1},
                 {3, 4},
@@ -157,7 +157,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 2},
                 {3, 4, 5},
@@ -166,7 +166,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix e =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 2},
                 {3, 4, 5},
@@ -197,7 +197,7 @@ public class DoubleMatrixTest {
 
     { // isSymmetric() の動作確認
       DoubleMatrix a =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 7, 3},
                 {7, 4, -5},
@@ -211,14 +211,14 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // toString() の動作確認
-      DoubleMatrix a = new DoubleMatrix(new double[][] {{0, 1, 2}});
+      DoubleMatrix a = DoubleMatrix.from(new double[][] {{0, 1, 2}});
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0}, {1}, {2},
               });
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 3, 6, 9},
                 {1, 4, 7, 10},
@@ -251,16 +251,16 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // add() の動作確認
-      DoubleMatrix a = new DoubleMatrix(new double[][] {{1, 2, 3}});
+      DoubleMatrix a = DoubleMatrix.from(new double[][] {{1, 2, 3}});
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 4, 5},
                 {2, 5, 6},
                 {3, 6, 7},
               });
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 4},
                 {2, 5},
@@ -268,7 +268,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 4},
                 {2, 5},
@@ -276,7 +276,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix e =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {-1, 4},
                 {-2, 5},
@@ -284,7 +284,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix f =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 8},
                 {0, 10},
@@ -308,7 +308,7 @@ public class DoubleMatrixTest {
 
     { // sub() の動作確認
       DoubleMatrix a =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 4, 7, 10},
                 {2, 5, 8, 11},
@@ -316,7 +316,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 1, 1, 1},
                 {-1, -1, -1, -1},
@@ -324,14 +324,14 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 3, 6, 9},
                 {3, 6, 9, 12},
                 {1, 4, 7, 10},
               });
 
-      DoubleMatrix d = new DoubleMatrix(new double[][] {{1, 2}});
+      DoubleMatrix d = DoubleMatrix.from(new double[][] {{1, 2}});
 
       assert a.minus(b).isEqual(c);
 
@@ -341,7 +341,7 @@ public class DoubleMatrixTest {
 
     { // 行列の定数倍の動作確認
       DoubleMatrix a =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {-9, -3, 6},
                 {4, 5, 6},
@@ -349,7 +349,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {-18, -6, 12},
                 {8, 10, 12},
@@ -357,7 +357,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix z =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 0, 0},
                 {0, 0, 0},
@@ -378,26 +378,26 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // 行列同士の掛け算の動作確認
-      DoubleMatrix a = new DoubleMatrix(new double[][] {{1, 2, 3, 4, 5}});
+      DoubleMatrix a = DoubleMatrix.from(new double[][] {{1, 2, 3, 4, 5}});
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1}, {1}, {1}, {1}, {1},
               });
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1}, {2}, {3}, {4}, {5},
               });
 
-      DoubleMatrix d = new DoubleMatrix(new double[][] {{1, 1, 1, 1, 1}});
+      DoubleMatrix d = DoubleMatrix.from(new double[][] {{1, 1, 1, 1, 1}});
 
-      DoubleMatrix e = new DoubleMatrix(new double[][] {{15}});
+      DoubleMatrix e = DoubleMatrix.from(new double[][] {{15}});
 
       DoubleMatrix f =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3, 4, 5},
                 {1, 2, 3, 4, 5},
@@ -407,7 +407,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix g =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 1, 1, 1, 1},
                 {2, 2, 2, 2, 2},
@@ -429,7 +429,7 @@ public class DoubleMatrixTest {
       DoubleMatrix a = DoubleMatrix.createDiagonalMatrix(1, 2, 3);
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 0, 0},
                 {0, 2, 0},
@@ -437,7 +437,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 2},
                 {3, 4, 5},
@@ -447,7 +447,7 @@ public class DoubleMatrixTest {
       DoubleMatrix d = DoubleMatrix.createDiagonalMatrix(2, 3, 4);
 
       DoubleMatrix e =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 3, 8},
                 {6, 12, 20},
@@ -457,21 +457,21 @@ public class DoubleMatrixTest {
       DoubleMatrix f = DoubleMatrix.createDiagonalMatrix(2, 1);
 
       DoubleMatrix g =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3},
                 {4, 5, 6},
               });
 
       DoubleMatrix h =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {2, 4, 6},
                 {4, 5, 6},
               });
 
       DoubleMatrix z =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 0, 0},
                 {0, 0, 0},
@@ -489,7 +489,7 @@ public class DoubleMatrixTest {
       DoubleMatrix a = DoubleMatrix.createIdentityMatrix(5);
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 0, 0, 0, 0},
                 {0, 1, 0, 0, 0},
@@ -503,24 +503,24 @@ public class DoubleMatrixTest {
 
     { // 行列の転置の動作確認
       DoubleMatrix a =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3},
                 {4, 5, 6},
               });
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 4},
                 {2, 5},
                 {3, 6},
               });
 
-      DoubleMatrix c = new DoubleMatrix(new double[][] {{1, 2, 3}});
+      DoubleMatrix c = DoubleMatrix.from(new double[][] {{1, 2, 3}});
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1}, {2}, {3},
               });
@@ -535,11 +535,11 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // 行列同士の型の比較の動作確認
-      DoubleMatrix a = new DoubleMatrix(new double[][] {{1, 2, 3}});
-      DoubleMatrix b = new DoubleMatrix(new double[][] {{0, 0, 0}});
+      DoubleMatrix a = DoubleMatrix.from(new double[][] {{1, 2, 3}});
+      DoubleMatrix b = DoubleMatrix.from(new double[][] {{0, 0, 0}});
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3},
                 {1, 2, 3},
@@ -547,7 +547,7 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3},
                 {1, 2, 3},
@@ -574,12 +574,12 @@ public class DoubleMatrixTest {
         {5, 5, 5, 5},
       };
 
-      DoubleMatrix a = new DoubleMatrix(val);
+      DoubleMatrix a = DoubleMatrix.from(val);
 
-      DoubleMatrix b = new DoubleMatrix(val);
+      DoubleMatrix b = DoubleMatrix.from(val);
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 0, 0, 1, 0},
                 {0, 1, 0, 0, 0},
@@ -595,12 +595,12 @@ public class DoubleMatrixTest {
         {3, 2, 1},
       };
 
-      DoubleMatrix d = new DoubleMatrix(val2);
+      DoubleMatrix d = DoubleMatrix.from(val2);
 
-      DoubleMatrix e = new DoubleMatrix(val2);
+      DoubleMatrix e = DoubleMatrix.from(val2);
 
       DoubleMatrix f =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 0, 1},
                 {0, 1, 0},
@@ -635,25 +635,25 @@ public class DoubleMatrixTest {
         {4, 5, 6},
       };
 
-      DoubleMatrix a = new DoubleMatrix(val);
+      DoubleMatrix a = DoubleMatrix.from(val);
 
-      DoubleMatrix b = new DoubleMatrix(val);
+      DoubleMatrix b = DoubleMatrix.from(val);
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {2, 2, 2},
                 {2, 2, 2},
               });
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {3, 4, 5},
                 {6, 7, 8},
               });
 
-      DoubleMatrix e = new DoubleMatrix(new double[][] {{1, 2, 3}});
+      DoubleMatrix e = DoubleMatrix.from(new double[][] {{1, 2, 3}});
 
       assert !a.isEqual(d);
       a.add(c);
@@ -670,9 +670,9 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // 自分自身の定数倍の動作確認
-      DoubleMatrix a = new DoubleMatrix(new double[][] {{1, 2, 3}});
+      DoubleMatrix a = DoubleMatrix.from(new double[][] {{1, 2, 3}});
 
-      DoubleMatrix b = new DoubleMatrix(new double[][] {{12, 24, 36}});
+      DoubleMatrix b = DoubleMatrix.from(new double[][] {{12, 24, 36}});
 
       assert !a.isEqual(b);
       a.mul(12);
@@ -680,16 +680,16 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // ファイル入出力の動作確認
-      DoubleMatrix a = new DoubleMatrix(new double[][] {{1, 2, 3}});
+      DoubleMatrix a = DoubleMatrix.from(new double[][] {{1, 2, 3}});
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {-1}, {-2}, {-3},
               });
 
       DoubleMatrix c =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {-1, -4},
                 {-2, -5},
@@ -722,18 +722,18 @@ public class DoubleMatrixTest {
     } // end of block
 
     { // DoubleMatrix(int, int), DoubleMatrix(int, int, double...) の動作確認
-      DoubleMatrix a = new DoubleMatrix(5, 1);
+      DoubleMatrix a = DoubleMatrix.createZeroMatrix(5, 1);
 
       DoubleMatrix b =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0}, {0}, {0}, {0}, {0},
               });
 
-      DoubleMatrix c = new DoubleMatrix(4, 5);
+      DoubleMatrix c = DoubleMatrix.createZeroMatrix(4, 5);
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0},
@@ -741,10 +741,10 @@ public class DoubleMatrixTest {
                 {0, 0, 0, 0, 0},
               });
 
-      DoubleMatrix e = new DoubleMatrix(2, 2, 1, 2, 3, 4);
+      DoubleMatrix e = DoubleMatrix.of(2, 2, 1, 2, 3, 4);
 
       DoubleMatrix f =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2},
                 {3, 4},
@@ -753,11 +753,11 @@ public class DoubleMatrixTest {
       Test.assertThrows(
           IllegalArgumentException.class,
           "new DoubleMatrix(2, 2, 1, 2, 3)",
-          () -> new DoubleMatrix(2, 2, 1, 2, 3));
+          () -> DoubleMatrix.of(2, 2, 1, 2, 3));
       Test.assertThrows(
           IllegalArgumentException.class,
           "new DoubleMatrix(2, 2, 1, 2, 3, 4, 5)",
-          () -> new DoubleMatrix(2, 2, 1, 2, 3, 4, 5));
+          () -> DoubleMatrix.of(2, 2, 1, 2, 3, 4, 5));
 
       assert a.isEqual(b);
       assert c.isEqual(d);
@@ -767,12 +767,12 @@ public class DoubleMatrixTest {
     { // createRowVector(), createColumnVector() の動作確認
       DoubleMatrix a = DoubleMatrix.createRowVector(-3, -2, -1, 0);
 
-      DoubleMatrix b = new DoubleMatrix(new double[][] {{-3, -2, -1, 0}});
+      DoubleMatrix b = DoubleMatrix.from(new double[][] {{-3, -2, -1, 0}});
 
       DoubleMatrix c = DoubleMatrix.createColumnVector(4, 5, 6, -9);
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {4}, {5}, {6}, {-9},
               });
@@ -787,7 +787,7 @@ public class DoubleMatrixTest {
       DoubleMatrix c = DoubleMatrix.createColumnVector(1, 2, -3);
 
       DoubleMatrix d =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {-1, 1, 1},
                 {2, -2, 2},
@@ -795,21 +795,21 @@ public class DoubleMatrixTest {
               });
 
       DoubleMatrix e =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3},
                 {4, 5, 6},
               });
 
       DoubleMatrix f =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3, 1, 2, 3},
                 {4, 5, 6, 4, 5, 6},
               });
 
       DoubleMatrix g =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {1, 2, 3, 1, 2, 3},
                 {4, 5, 6, 4, 5, 6},
@@ -845,14 +845,14 @@ public class DoubleMatrixTest {
 
     { // コピーコンストラクタの動作確認
       DoubleMatrix a =
-          new DoubleMatrix(
+          DoubleMatrix.from(
               new double[][] {
                 {0, 1, 2},
                 {3, 4, 5},
                 {6, 7, 8},
               });
 
-      DoubleMatrix b = new DoubleMatrix(a); // aの内容でbを作成
+      DoubleMatrix b = DoubleMatrix.from(a); // aの内容でbを作成
 
       assert a.isEqual(b);
       a.set(1, 1, -9);

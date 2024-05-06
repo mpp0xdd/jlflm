@@ -286,6 +286,51 @@ public class DoubleMatrix {
     return (new DoubleMatrix(result, false, false));
   }
 
+  /**
+   * 型がrows * columnsで成分の値が全て0dの行列（零行列）を生成します。
+   *
+   * @param rows 行列の行数
+   * @param columns 行列の列数
+   * @return 零行列
+   */
+  public static DoubleMatrix createZeroMatrix(int rows, int columns) {
+    return new DoubleMatrix(rows, columns);
+  }
+
+  /**
+   * 引数で渡されたdouble型2次元配列の内容で行列を生成します。
+   *
+   * @param matrix 行列を表すdouble型2次元配列
+   * @return 行列
+   * @throws IllegalArgumentException matrixを行列として解釈できない場合
+   */
+  public static DoubleMatrix from(double[][] matrix) {
+    return new DoubleMatrix(matrix);
+  }
+
+  /**
+   * 行列のコピーを生成します。
+   *
+   * @param val コピー元の行列
+   * @return コピーされた行列
+   */
+  public static DoubleMatrix from(DoubleMatrix val) {
+    return new DoubleMatrix(val);
+  }
+
+  /**
+   * 型がrows * columnsの行列を生成し，各成分の値を左上から右下にかけて順に初期化します。
+   *
+   * @param rows 行列の行数
+   * @param columns 行列の列数
+   * @param entries 初期化に使用するrows * columns個のdouble値
+   * @return 行列
+   * @throws IllegalArgumentException entries.length != rows * columnsの場合
+   */
+  public static DoubleMatrix of(int rows, int columns, double... entries) {
+    return new DoubleMatrix(rows, columns, entries);
+  }
+
   /** 行列を表すdouble型2次元配列です。 */
   private final double[][] matrix;
 
@@ -349,7 +394,7 @@ public class DoubleMatrix {
    * @param matrix 行列を表すdouble型2次元配列
    * @throws IllegalArgumentException matrixを行列として解釈できない場合
    */
-  public DoubleMatrix(double[][] matrix) {
+  private DoubleMatrix(double[][] matrix) {
     this(matrix, true, true);
   }
 
@@ -359,7 +404,7 @@ public class DoubleMatrix {
    * @param rows 行列の行数
    * @param columns 行列の列数
    */
-  public DoubleMatrix(int rows, int columns) {
+  private DoubleMatrix(int rows, int columns) {
     this(new double[rows][columns], false, false);
   }
 
@@ -371,7 +416,7 @@ public class DoubleMatrix {
    * @param entries 初期化に使用するrows * columns個のdouble値
    * @throws IllegalArgumentException entries.length != rows * columnsの場合
    */
-  public DoubleMatrix(int rows, int columns, double... entries) {
+  private DoubleMatrix(int rows, int columns, double... entries) {
     this(new double[rows][columns], false, false);
 
     if (entries.length > this.size) {
@@ -392,7 +437,7 @@ public class DoubleMatrix {
    *
    * @param val コピー元の行列
    */
-  public DoubleMatrix(DoubleMatrix val) {
+  private DoubleMatrix(DoubleMatrix val) {
     this(val.matrix, false, true);
   }
 
@@ -503,7 +548,7 @@ public class DoubleMatrix {
    * }</pre>
    *
    * @return この行列の文字列表現
-   * @see #DoubleMatrix(int, int)
+   * @see #createZeroMatrix(int, int)
    */
   @Override
   public String toString() {
