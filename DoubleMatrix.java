@@ -714,7 +714,7 @@ public class DoubleMatrix {
    * @return this
    * @throws ArithmeticException thisとvalの型が異なり，計算を実行できない場合
    */
-  public DoubleMatrix subeq(DoubleMatrix val) {
+  public DoubleMatrix sub(DoubleMatrix val) {
     if (!this.isTypeEqual(val)) {
       throw (new ArithmeticException(
           String.format(

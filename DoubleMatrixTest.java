@@ -659,14 +659,14 @@ public class DoubleMatrixTest {
       a.add(c);
       assert a.isEqual(d);
 
-      a.subeq(c);
+      a.sub(c);
       assert !a.isEqual(d);
       assert a.isEqual(b);
 
       Test.assertThrows(ArithmeticException.class, "a.add(e)", () -> a.add(e));
       Test.assertThrows(ArithmeticException.class, "e.add(a)", () -> e.add(a));
-      Test.assertThrows(ArithmeticException.class, "a.subeq(e)", () -> a.subeq(e));
-      Test.assertThrows(ArithmeticException.class, "e.subeq(a)", () -> e.subeq(a));
+      Test.assertThrows(ArithmeticException.class, "a.sub(e)", () -> a.sub(e));
+      Test.assertThrows(ArithmeticException.class, "e.sub(a)", () -> e.sub(a));
     } // end of block
 
     { // 自分自身の定数倍の動作確認
