@@ -57,18 +57,18 @@ public class DoubleMatrixTest {
 
     { // rows, columns, sizeが正しく設定されているかを確認
       DoubleMatrix a = new DoubleMatrix(new double[][] {{0, 0, 0}});
-      assert a.rows == 1;
-      assert a.columns == 3;
-      assert a.size == 3;
+      assert a.rows() == 1;
+      assert a.columns() == 3;
+      assert a.size() == 3;
 
       DoubleMatrix b =
           new DoubleMatrix(
               new double[][] {
                 {0}, {0}, {0}, {0},
               });
-      assert b.rows == 4;
-      assert b.columns == 1;
-      assert b.size == 4;
+      assert b.rows() == 4;
+      assert b.columns() == 1;
+      assert b.size() == 4;
 
       DoubleMatrix c =
           new DoubleMatrix(
@@ -79,9 +79,9 @@ public class DoubleMatrixTest {
                 {0, 4, 2},
                 {0, 5, 1},
               });
-      assert c.rows == 5;
-      assert c.columns == 3;
-      assert c.size == 15;
+      assert c.rows() == 5;
+      assert c.columns() == 3;
+      assert c.size() == 15;
     } // end of block
 
     { // get(), set()の動作確認
@@ -118,7 +118,7 @@ public class DoubleMatrixTest {
 
       for (int i = 0; i < val.length; i++) {
         for (int j = 0; j < val[i].length; j++) {
-          assert a.get(i, j) == a.rows * i + j;
+          assert a.get(i, j) == a.rows() * i + j;
         }
       }
     } // end of block

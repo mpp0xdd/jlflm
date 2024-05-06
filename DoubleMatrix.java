@@ -290,13 +290,13 @@ public class DoubleMatrix {
   private final double[][] matrix;
 
   /** この行列の行数を表します。 */
-  public final int rows;
+  private final int rows;
 
   /** この行列の列数を表します。 */
-  public final int columns;
+  private final int columns;
 
   /** この行列のサイズ(rows * columnsの計算結果)を表します。 */
-  public final int size;
+  private final int size;
 
   /**
    * このクラスのコードを直接触るプログラマのために用意された，privateなコンストラクタです。<br>
@@ -394,6 +394,33 @@ public class DoubleMatrix {
    */
   public DoubleMatrix(DoubleMatrix val) {
     this(val.matrix, false, true);
+  }
+
+  /**
+   * この行列の行数を返します。
+   *
+   * @return 行数
+   */
+  public int rows() {
+    return this.rows;
+  }
+
+  /**
+   * この行列の列数を返します。
+   *
+   * @return 列数
+   */
+  public int columns() {
+    return this.columns;
+  }
+
+  /**
+   * この行列のサイズ(rows * columnsの計算結果)を返します。
+   *
+   * @return サイズ
+   */
+  public int size() {
+    return this.size;
   }
 
   /**
