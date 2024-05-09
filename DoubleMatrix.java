@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
@@ -150,22 +149,8 @@ public class DoubleMatrix {
 
     for (int k = 1; k < matrices.length; k++) {
       if (matrices[k].rows != rows) {
-        StringBuilder errMsgBuf = new StringBuilder("行列の行数が揃っていません。水平方向への結合に失敗しました\n");
-        final int loc = k;
-        for (k = 0; k < matrices.length; k++) {
-          if (k == loc) {
-            errMsgBuf.append("matrices[" + k + "] <--\n");
-          } else {
-            errMsgBuf.append("matrices[" + k + "]\n");
-          }
-          errMsgBuf.append(matrices[k]);
-          if (k < matrices.length - 1) {
-            errMsgBuf.append("\n");
-          }
-        }
-        throw (new IllegalArgumentException(errMsgBuf.toString()));
+        throw (new IllegalArgumentException("行列の行数が揃っていません。水平方向への結合に失敗しました"));
       }
-
       columns += matrices[k].columns;
     }
 
@@ -205,22 +190,8 @@ public class DoubleMatrix {
 
     for (int k = 1; k < matrices.length; k++) {
       if (matrices[k].columns != columns) {
-        StringBuilder errMsgBuf = new StringBuilder("行列の列数が揃っていません。垂直方向への結合に失敗しました\n");
-        final int loc = k;
-        for (k = 0; k < matrices.length; k++) {
-          if (k == loc) {
-            errMsgBuf.append("matrices[" + k + "] <--\n");
-          } else {
-            errMsgBuf.append("matrices[" + k + "]\n");
-          }
-          errMsgBuf.append(matrices[k]);
-          if (k < matrices.length - 1) {
-            errMsgBuf.append("\n");
-          }
-        }
-        throw (new IllegalArgumentException(errMsgBuf.toString()));
+        throw (new IllegalArgumentException("行列の列数が揃っていません。垂直方向への結合に失敗しました"));
       }
-
       rows += matrices[k].rows;
     }
 
@@ -358,18 +329,7 @@ public class DoubleMatrix {
     if (doValidate) {
       for (int i = 1; i < matrix.length; i++) {
         if (matrix[i].length != matrix[0].length) {
-          StringBuilder errMsgBuf = new StringBuilder("行列として解釈できません\n");
-          final int loc = i;
-          for (i = 0; i < matrix.length; i++) {
-            errMsgBuf.append(Arrays.toString(matrix[i]));
-            if (i == loc) {
-              errMsgBuf.append(" <--");
-            }
-            if (i < matrix.length - 1) {
-              errMsgBuf.append("\n");
-            }
-          }
-          throw (new IllegalArgumentException(errMsgBuf.toString()));
+          throw (new IllegalArgumentException("行列として解釈できません"));
         }
       }
     }
