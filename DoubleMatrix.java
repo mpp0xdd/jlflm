@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 /**
  * double型2次元配列をラップし，行列として扱えるようにするクラスです。<br>
@@ -71,7 +70,7 @@ public class DoubleMatrix {
   }
 
   /**
-   * 行列の文字列表現が書き込まれたファイルを，各成分の間の区切り文字を指定して読み込み，行列を生成します。<br>
+   * 行列の文字列表現が書き込まれたファイルを，各成分の間の区切り（正規表現）を指定して読み込み，行列を生成します。<br>
    * 以下は，CSVファイルに書き込まれた行列を読み込む例です。
    *
    * <pre>{@code
@@ -83,21 +82,21 @@ public class DoubleMatrix {
    * }</pre>
    *
    * @param filename ファイル名
-   * @param delim 各要素間の区切り文字
+   * @param regex 正規表現の区切り
    * @return ファイルから読み込んだ行列
    * @throws IOException 入出力エラーが発生した場合
    * @throws IllegalArgumentException ファイルの内容を行列として解釈できない場合
    */
-  public static DoubleMatrix readFromFile(String filename, String delim) throws IOException {
+  public static DoubleMatrix readFromFile(String filename, String regex) throws IOException {
     ArrayList<double[]> rows = new ArrayList<double[]>();
     String line = null;
 
     try (BufferedReader file = Files.newBufferedReader(Paths.get(filename))) {
       while ((line = file.readLine()) != null) {
-        StringTokenizer tokenizer = new StringTokenizer(line, delim);
-        double[] row = new double[tokenizer.countTokens()];
+        String[] tokens = line.split(regex);
+        double[] row = new double[tokens.length];
         for (int j = 0; j < row.length; j++) {
-          row[j] = Double.parseDouble(tokenizer.nextToken());
+          row[j] = Double.parseDouble(tokens[j]);
         }
         rows.add(row);
       }
