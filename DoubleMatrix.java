@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * double型2次元配列をラップし，行列として扱えるようにするクラスです。<br>
@@ -92,7 +93,7 @@ public class DoubleMatrix {
     String line = null;
 
     try (BufferedReader file = Files.newBufferedReader(Paths.get(filename))) {
-      while ((line = file.readLine()) != null) {
+      while (Objects.nonNull(line = file.readLine())) {
         String[] tokens = line.split(regex);
         double[] row = new double[tokens.length];
         for (int j = 0; j < row.length; j++) {
