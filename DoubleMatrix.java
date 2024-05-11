@@ -579,10 +579,12 @@ public class DoubleMatrix {
    * @param i i
    * @param j j
    * @param entry 格納される値
+   * @return this
    * @throws ArrayIndexOutOfBoundsException iまたはjの値が不正な添え字の場合
    */
-  public void set(int i, int j, double entry) {
+  public DoubleMatrix set(int i, int j, double entry) {
     this.matrix[i][j] = entry;
+    return this;
   }
 
   /**
@@ -591,21 +593,24 @@ public class DoubleMatrix {
    *
    * @param i1 任意の行番号
    * @param i2 任意の行番号
+   * @return this
    * @throws ArrayIndexOutOfBoundsException i1またはi2の値が不正な添え字の場合
    */
-  public void swapRows(int i1, int i2) {
+  public DoubleMatrix swapRows(int i1, int i2) {
     // 引数が同じなら交換処理を行う必要がないので何もせずreturnする
     if (i1 == i2) {
       // ただし，引数が配列の添え字範囲を逸脱していない場合に限る
       // 逸脱している場合はそのまま交換処理を実行させ，例外を発生させる
       if ((0 <= i1 && i1 < this.rows) && (0 <= i2 && i2 < this.rows)) {
-        return;
+        return this;
       }
     }
 
     double[] tmp = this.matrix[i1];
     this.matrix[i1] = this.matrix[i2];
     this.matrix[i2] = tmp;
+
+    return this;
   }
 
   /**
@@ -614,15 +619,16 @@ public class DoubleMatrix {
    *
    * @param j1 任意の列番号
    * @param j2 任意の列番号
+   * @return this
    * @throws ArrayIndexOutOfBoundsException j1またはj2の値が不正な添え字の場合
    */
-  public void swapColumns(int j1, int j2) {
+  public DoubleMatrix swapColumns(int j1, int j2) {
     // 引数が同じなら交換処理を行う必要がないので何もせずreturnする
     if (j1 == j2) {
       // ただし，引数が配列の添え字範囲を逸脱していない場合に限る
       // 逸脱している場合はそのまま交換処理を実行させ，例外を発生させる
       if ((0 <= j1 && j1 < this.columns) && (0 <= j2 && j2 < this.columns)) {
-        return;
+        return this;
       }
     }
 
@@ -631,6 +637,8 @@ public class DoubleMatrix {
       this.matrix[i][j1] = this.matrix[i][j2];
       this.matrix[i][j2] = tmp;
     }
+
+    return this;
   }
 
   /**

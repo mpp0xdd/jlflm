@@ -102,8 +102,7 @@ public class DoubleMatrixTest {
       assert a.get(1, 1) == 4;
       assert a.get(2, 2) == 8;
 
-      a.set(1, 1, -90);
-      a.set(2, 2, 256);
+      assert a.set(1, 1, -90).set(2, 2, 256) == a;
       assert a.get(1, 1) == -90;
       assert a.get(2, 2) == 256;
     } // end of block
@@ -623,13 +622,15 @@ public class DoubleMatrixTest {
 
       assert a.isEqual(b);
       assert b.isEqual(a);
-      a.swapRows(0, 3);
+      assert a.swapRows(0, 3) == a;
       assert a.isEqual(c.times(b));
+      assert a.swapRows(0, 0) == a;
 
       assert d.isEqual(e);
       assert e.isEqual(d);
-      d.swapColumns(0, 2);
+      assert d.swapColumns(0, 2) == d;
       assert d.isEqual(e.times(f));
+      assert d.swapColumns(0, 0) == d;
     } // end of block
 
     { // 自分自身に対する加算と減算の動作確認
