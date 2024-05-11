@@ -50,8 +50,7 @@ public class DoubleMatrix {
   public static void writeToFile(DoubleMatrix matrix, String filename, String delim)
       throws IOException {
     try (BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
-      String buf = matrix.toString(delim);
-      file.write(buf, 0, buf.length());
+      file.write(matrix.toString(delim));
       file.flush();
     } catch (IOException ioe) {
       throw ioe;
