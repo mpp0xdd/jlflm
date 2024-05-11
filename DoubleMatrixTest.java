@@ -227,11 +227,14 @@ public class DoubleMatrixTest {
 
       assert a.toString().equals("0.0 1.0 2.0");
       assert a.toString(",").equals("0.0,1.0,2.0");
-      assert b.toString().equals("0.0\n1.0\n2.0");
-      assert b.toString(";").equals("0.0\n1.0\n2.0");
-      assert c.toString().equals("0.0 3.0 6.0 9.0\n1.0 4.0 7.0 10.0\n2.0 5.0 8.0 11.0");
+      assert b.toString().equals(String.format("0.0%n1.0%n2.0"));
+      assert b.toString(";").equals(String.format("0.0%n1.0%n2.0"));
+      assert c.toString()
+          .equals(String.format("0.0 3.0 6.0 9.0%n1.0 4.0 7.0 10.0%n2.0 5.0 8.0 11.0"));
       assert c.toString(" | ")
-          .equals("0.0 | 3.0 | 6.0 | 9.0\n1.0 | 4.0 | 7.0 | 10.0\n2.0 | 5.0 | 8.0 | 11.0");
+          .equals(
+              String.format(
+                  "0.0 | 3.0 | 6.0 | 9.0%n1.0 | 4.0 | 7.0 | 10.0%n2.0 | 5.0 | 8.0 | 11.0"));
 
       Test.assertThrows(IllegalArgumentException.class, "a.toString(\"\")", () -> a.toString(""));
       Test.assertThrows(IllegalArgumentException.class, "a.toString(\".\")", () -> a.toString("."));

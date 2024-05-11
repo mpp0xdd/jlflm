@@ -521,7 +521,7 @@ public class DoubleMatrix {
         result.append(this.matrix[i][j]);
       }
       if (i < this.rows - 1) {
-        result.append("\n");
+        result.append(System.lineSeparator());
       }
     }
 
