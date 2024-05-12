@@ -33,7 +33,15 @@ public class DoubleMatrixTest {
     }
   }
 
-  public static void writeToFile(String filename, String str) {
+  private static void checkEnableAssertions() {
+    boolean enableAssertions = false;
+    assert enableAssertions = true;
+    if (!enableAssertions) {
+      throw new AssertionError("Tests cannot be run because assertions are not enabled");
+    }
+  }
+
+  private static void writeToFile(String filename, String str) {
     try (BufferedWriter file = Files.newBufferedWriter(Paths.get(filename))) {
       file.write(str, 0, str.length());
       file.flush();
@@ -43,12 +51,7 @@ public class DoubleMatrixTest {
   }
 
   public static void main(String[] args) {
-
-    boolean enableassertions = false;
-    assert enableassertions = true;
-    if (!enableassertions) {
-      throw new AssertionError();
-    }
+    checkEnableAssertions();
 
     { // 引数の配列が不正な場合を確認
       Test.assertThrows(
