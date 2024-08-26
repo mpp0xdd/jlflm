@@ -6,7 +6,7 @@ CLASSES="classes"
 LIB="lib"
 TMP="tmp"
 DOC="doc"
-TARGET="DoubleMatrix.java"
+TARGET="DoubleMatrix"
 TEST="DoubleMatrixTest"
 FORMATTER="../Lib/google-java-format-1.15.0-all-deps.jar"
 
@@ -43,7 +43,7 @@ makejar () {
 }
 
 makedoc () {
-  javadoc "$CFLAGS" -d "$DOC" "$TARGET"
+  javadoc "$CFLAGS" -d "$DOC" "$TARGET.java"
 }
 
 test () {
