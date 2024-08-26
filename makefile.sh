@@ -1,4 +1,5 @@
 #!/bin/bash
+PROJECT="JaMaCa"
 CFLAGS="-J-Dfile.encoding=UTF-8"
 JFLAGS="-Dfile.encoding=UTF-8"
 CLASSES="classes"
@@ -38,7 +39,7 @@ make () {
 
 makejar () {
   javac "$CFLAGS" -d "$CLASSES" '*.java'
-  jar "$CFLAGS" cvf 'jglib.jar' '*.java' -C "$CLASSES" .
+  jar "$CFLAGS" cvf "$PROJECT.jar" '*.java' -C "$CLASSES" .
 }
 
 makedoc () {
