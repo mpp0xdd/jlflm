@@ -3,6 +3,7 @@ PROJECT="JaMaCa"
 CFLAGS="-J-Dfile.encoding=UTF-8"
 JFLAGS="-Dfile.encoding=UTF-8"
 CLASSES="classes"
+LIB="lib"
 TMP="tmp"
 DOC="doc"
 DOCTGT="DoubleMatrix.java"
@@ -29,8 +30,8 @@ format () {
 }
 
 clean () {
-  rm -rf "$CLASSES" "$TMP" "$DOC"
-  mkdir "$CLASSES" "$TMP" "$DOC"
+  rm -rf "$CLASSES" "$LIB" "$TMP" "$DOC"
+  mkdir "$CLASSES" "$LIB" "$TMP" "$DOC"
 }
 
 make () {
@@ -38,8 +39,7 @@ make () {
 }
 
 makejar () {
-  javac "$CFLAGS" -d "$CLASSES" '*.java'
-  jar "$CFLAGS" cvf "$PROJECT.jar" '*.java' -C "$CLASSES" .
+  jar "$CFLAGS" cvf "$LIB/$PROJECT.jar" '*.java' -C "$CLASSES" .
 }
 
 makedoc () {
@@ -61,7 +61,7 @@ while getopts 'hfcmjdt' opt; do
     f) format ;;
     c) clean ;;
     m) make ;;
-    j) clean && makejar ;;
+    j) clean && make && makejar ;;
     d) clean && makedoc ;;
     t) format && make && test ;;
   esac
