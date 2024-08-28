@@ -511,20 +511,7 @@ public class DoubleMatrix {
    */
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder();
-
-    for (int i = 0; i < this.rows; i++) {
-      result.append(this.matrix[i][0]);
-      for (int j = 1; j < this.columns; j++) {
-        result.append(DEFAULT_DELIM);
-        result.append(this.matrix[i][j]);
-      }
-      if (i < this.rows - 1) {
-        result.append(System.lineSeparator());
-      }
-    }
-
-    return result.toString();
+    return toString(DEFAULT_DELIM);
   }
 
   /**
@@ -553,12 +540,20 @@ public class DoubleMatrix {
       throw (new IllegalArgumentException("区切り文字が不正です: " + delim));
     }
 
-    String result = this.toString();
-    if (!DEFAULT_DELIM.equals(delim)) {
-      result = result.replace(DEFAULT_DELIM, delim);
+    StringBuilder result = new StringBuilder();
+
+    for (int i = 0; i < this.rows; i++) {
+      result.append(this.matrix[i][0]);
+      for (int j = 1; j < this.columns; j++) {
+        result.append(delim);
+        result.append(this.matrix[i][j]);
+      }
+      if (i < this.rows - 1) {
+        result.append(System.lineSeparator());
+      }
     }
 
-    return result;
+    return result.toString();
   }
 
   /**
