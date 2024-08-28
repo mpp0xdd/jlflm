@@ -859,7 +859,7 @@ public class DoubleMatrixTest {
                 {6, 7, 8},
               });
 
-      DoubleMatrix b = DoubleMatrix.from(a); // aの内容でbを作成
+      DoubleMatrix b = DoubleMatrix.copyOf(a); // aの内容でbを作成
 
       assert a.isEqual(b);
       a.set(1, 1, -9);

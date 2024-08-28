@@ -284,7 +284,7 @@ public class DoubleMatrix {
    * @param matrix コピー元の行列
    * @return コピーされた行列
    */
-  public static DoubleMatrix from(DoubleMatrix matrix) {
+  public static DoubleMatrix copyOf(DoubleMatrix matrix) {
     return (new DoubleMatrix(matrix));
   }
 
