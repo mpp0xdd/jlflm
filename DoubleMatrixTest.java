@@ -676,6 +676,42 @@ public class DoubleMatrixTest {
       Test.assertThrows(ArithmeticException.class, "e.sub(a)", () -> e.sub(a));
     } // end of block
 
+    { // += this
+      DoubleMatrix a =
+          DoubleMatrix.from(
+              new double[][] {
+                {1, 2, 3},
+                {4, 5, 6},
+              });
+      DoubleMatrix expected =
+          DoubleMatrix.from(
+              new double[][] {
+                {2, 4, 6},
+                {8, 10, 12},
+              });
+
+      assert a.add(a).isEqual(expected);
+      assert a.isEqual(expected);
+    }
+
+    { // -= this
+      DoubleMatrix a =
+          DoubleMatrix.from(
+              new double[][] {
+                {1, 2, 3},
+                {4, 5, 6},
+              });
+      DoubleMatrix expected =
+          DoubleMatrix.from(
+              new double[][] {
+                {0, 0, 0},
+                {0, 0, 0},
+              });
+
+      assert a.sub(a).isEqual(expected);
+      assert a.isEqual(expected);
+    }
+
     { // 自分自身の定数倍の動作確認
       DoubleMatrix a = DoubleMatrix.from(new double[][] {{1, 2, 3}});
 
